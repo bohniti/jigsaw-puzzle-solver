@@ -1,0 +1,20 @@
+
+name:
+    PuzzleSolver
+
+channels:
+    - conda-forge
+    - pytorch
+    - pytorch-test
+    - pytorch-nightly
+
+dependencies:
+    - python=3.9
+    - numpy
+    - scikit-learn
+    - opencv
+    - matplotlib
+    - pytorch
+    - torchvision
+    - pytorch-lightning
+    - optuna
