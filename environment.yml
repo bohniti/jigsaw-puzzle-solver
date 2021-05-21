@@ -19,6 +19,7 @@ dependencies:
     - torchvision
     - pytorch-lightning
     - optuna
+    - toml
     - pip:
           - ray
           - mlflow

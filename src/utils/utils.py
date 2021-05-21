@@ -1,11 +1,12 @@
-import pickle
+import toml
 
 
-def save_obj(obj, name):
-    with open('../config/' + name + '.pkl', 'wb') as f:
-        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+def load_config(name, show=True):
 
+    file = toml.load('../config/' + name + '.toml')
+    if show:
+        print(f'#######################\n# MODEL CONFIGURATION #\n#######################')
+        for key, value in file.items():
+            print(f'{key}: {value} ')
+    return file
 
-def load_obj(name):
-    with open('../config/' + name + '.pkl', 'rb') as f:
-        return pickle.load(f)

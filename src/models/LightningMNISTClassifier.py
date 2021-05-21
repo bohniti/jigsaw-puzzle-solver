@@ -1,7 +1,11 @@
-import pytorch_lightning as pl
+# TODO create a requirenments.txt from env
 # TODO Change os to pathlib because of windows, linux usbability
 import os
+
+import pytorch_lightning as pl
 import torch
+from torchvision import transforms
+from torchvision.datasets import MNIST
 
 
 # TODO Refactors such that everything is in sperate Files
@@ -76,13 +80,13 @@ class LightningMNISTClassifier(pl.LightningModule):
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))
         ])
-        return MNIST(data_dir, train=True, download=True, transform=transform)
+        return MNIST(data_dir, train=True, download=True)
 
     def prepare_data(self):
         mnist_train = self.download_data(self.data_dir)
 
         self.mnist_train, self.mnist_val = random_split(
-            mnist_train, [55000, 5000])
+            mnist_train, [500, 5000])
 
     def train_dataloader(self):
         return DataLoader(self.mnist_train, batch_size=int(self.batch_size))
@@ -102,7 +106,6 @@ def train_mnist(config):
     trainer.fit(model)
 
     class LightningMNISTClassifier(pl.LightningModule):
-
         """
         This has been adapted from
         https://towardsdatascience.com/from-pytorch-to-pytorch-lightning-a-gentle-introduction-b371b7caaf09
