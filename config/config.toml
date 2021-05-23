@@ -1,7 +1,8 @@
 num_samples = 10
-num_epochs = 10
+num_epochs = 2
 gpus_per_trial = 0
 cpus_per_trial = 6
+num_workers = 6
 raw_data_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/KMNIST/raw'
 result_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results'
 

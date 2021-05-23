@@ -1,7 +1,7 @@
 import math
-
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import TensorBoardLogger
+# TODO Create requirenments.txt from conda env
 from ray import tune
 from ray.tune import CLIReporter
 from ray.tune.integration.pytorch_lightning import TuneReportCallback
