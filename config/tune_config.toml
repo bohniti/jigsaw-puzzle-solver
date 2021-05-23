@@ -1,4 +1,0 @@
-layer_1_size = 128
-layer_2_size = 256
-lr = 1e-3
-batch_size = 1024
