@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results/tune_mnist_asha/training_function_b42e2_00007_7_batch_size=64,layer_1_size=128,layer_2_size=128,lr=0.0023989_2021-05-23_22-31-28/0/60cb39373dea43b5a6099cfa10481363/artifacts
+end_time: 1621801912153
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 60cb39373dea43b5a6099cfa10481363
+run_uuid: 60cb39373dea43b5a6099cfa10481363
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1621801893882
+status: 3
+tags: []
+user_id: beantown

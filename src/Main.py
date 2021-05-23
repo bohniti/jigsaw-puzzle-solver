@@ -1,6 +1,6 @@
 import math
 import pytorch_lightning as pl
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import TensorBoardLogger,  MLFlowLogger
 # TODO Create requirenments.txt from conda env
 from ray import tune
 from ray.tune import CLIReporter
@@ -8,17 +8,18 @@ from ray.tune.integration.pytorch_lightning import TuneReportCallback
 from ray.tune.schedulers import ASHAScheduler
 from src.models.LightningMNISTClassifier import LightningMNISTClassifier
 from src.utils.utils import load_config
+import mlflow
+#mlflow.set_tracking_uri("databricks")
+#mlflow.set_experiment("/Jiggsaw_test")
 
 
 def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
     model = LightningMNISTClassifier(config, data_dir)
-    print(tune.get_trial_dir())
     trainer = pl.Trainer(
         max_epochs=num_epochs,
         # If fractional GPUs passed in, convert to int.
         gpus=math.ceil(num_gpus),
-        logger=TensorBoardLogger(
-            save_dir=tune.get_trial_dir(), name="", version="."),
+        logger=MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test"),
         progress_bar_refresh_rate=0,
         callbacks=[
             TuneReportCallback(

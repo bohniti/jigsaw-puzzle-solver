@@ -1,0 +1,4 @@
+artifact_location: file:///Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results/tune_mnist_asha/training_function_b42e2_00000_0_batch_size=32,layer_1_size=64,layer_2_size=64,lr=0.0002385_2021-05-23_22-30-25/0
+experiment_id: '0'
+lifecycle_stage: active
+name: default
