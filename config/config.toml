@@ -1,3 +1,11 @@
 num_samples = 10
 num_epochs = 10
 gpus_per_trial = 0
+cpus_per_trial = 6
+raw_data_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/KMNIST/raw'
+result_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results'
+
+[Scheduler]
+    type = 'ASHAScheduler'
+    grace_period= 1
+    reduction_factor = 2
