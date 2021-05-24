@@ -1,0 +1,41 @@
+Failure # 1 (occurred at 2021-05-24_10-32-58)
+Traceback (most recent call last):
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/trial_runner.py", line 702, in _process_trial
+    results = self.trial_executor.fetch_result(trial)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/ray_trial_executor.py", line 686, in fetch_result
+    result = ray.get(trial_future[0], timeout=DEFAULT_GET_TIMEOUT)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/_private/client_mode_hook.py", line 47, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/worker.py", line 1481, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::ImplicitFunc.train_buffered()[39m (pid=50025, ip=192.168.2.103)
+  File "python/ray/_raylet.pyx", line 505, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 449, in ray._raylet.execute_task.function_executor
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/_private/function_manager.py", line 556, in actor_method_executor
+    return method(__ray_actor, *args, **kwargs)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/trainable.py", line 173, in train_buffered
+    result = self.train()
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/trainable.py", line 232, in train
+    result = self.step()
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/function_runner.py", line 366, in step
+    self._report_thread_runner_error(block=True)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/function_runner.py", line 512, in _report_thread_runner_error
+    raise TuneError(
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::ImplicitFunc.train_buffered()[39m (pid=50025, ip=192.168.2.103)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/function_runner.py", line 248, in run
+    self._entrypoint()
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/function_runner.py", line 315, in entrypoint
+    return self._trainable_func(self.config, self._status_reporter,
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/function_runner.py", line 580, in _trainable_func
+    output = fn()
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/utils/trainable.py", line 339, in _inner
+    inner(config, checkpoint_dir=None)
+  File "/Users/beantown/opt/anaconda3/envs/PuzzleSolver/lib/python3.8/site-packages/ray/tune/utils/trainable.py", line 330, in inner
+    trainable(config, **fn_kwargs)
+  File "/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/src/Main.py", line 17, in training_function
+    model = LightningMNISTClassifier(config, data_dir)
+  File "/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/src/models/LightningMNISTClassifier.py", line 25, in __init__
+    self.log.experiment.log_hyperparams(self=layer_1_size)
+AttributeError: 'function' object has no attribute 'experiment'
+

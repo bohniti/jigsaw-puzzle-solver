@@ -9,17 +9,21 @@ from ray.tune.schedulers import ASHAScheduler
 from src.models.LightningMNISTClassifier import LightningMNISTClassifier
 from src.utils.utils import load_config
 import mlflow
+from ray.tune.integration.mlflow import mlflow_mixin
 #mlflow.set_tracking_uri("databricks")
 #mlflow.set_experiment("/Jiggsaw_test")
 
+# logger = MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test")
 
+@mlflow_mixin
 def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
     model = LightningMNISTClassifier(config, data_dir)
+    mlflow.autolog()
     trainer = pl.Trainer(
         max_epochs=num_epochs,
         # If fractional GPUs passed in, convert to int.
+        # logger = not used because of ray mlflow support
         gpus=math.ceil(num_gpus),
-        logger=MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test"),
         progress_bar_refresh_rate=0,
         callbacks=[
             TuneReportCallback(
@@ -33,7 +37,7 @@ def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
 
 
 def main(hyperparameters, config):
-    num_samples = config['num_samples']
+    num_trials = config['num_trials']
     num_epochs = config['num_epochs']
     gpus_per_trial = config['gpus_per_trial']
     cpus_per_trial = config['cpus_per_trial']
@@ -60,6 +64,11 @@ def main(hyperparameters, config):
         parameter_columns=["layer_1_size", "layer_2_size", "lr", "batch_size"],
         metric_columns=["loss", "mean_accuracy", "training_iteration"])
 
+    hyperparameters['mlflow'] = {
+            "experiment_name": "/Users/timo.bohnstedt@fau.de/Jiggsaw_test",
+            "tracking_uri": "databricks"
+        }
+
     analysis = tune.run(
         tune.with_parameters(
             training_function,
@@ -74,7 +83,7 @@ def main(hyperparameters, config):
         mode="min",
         local_dir=result_dir,
         config=hyperparameters,
-        num_samples=num_samples,
+        num_samples=num_trials,
         scheduler=scheduler,
         progress_reporter=reporter,
         name="tune_mnist_asha")

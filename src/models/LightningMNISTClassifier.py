@@ -1,15 +1,17 @@
 # TODO Change os to pathlib because of windows, linux usbability
 import os
+
 import pytorch_lightning as pl
 import torch
+from torch.nn import functional as F
+from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
 from torchvision.datasets import KMNIST
-from torch.utils.data import DataLoader, random_split
-from torch.nn import functional as F
 
 
 # TODO Refactors such that everything is in sperate Files
-# TODO Implement MLFlow
+# TODO Implement MLFlow Logger for Parameters
+# TODO Implement MLFlow credential in config
 class LightningMNISTClassifier(pl.LightningModule):
 
     def __init__(self, hyperparameters, data_dir=None):
@@ -55,6 +57,15 @@ class LightningMNISTClassifier(pl.LightningModule):
         logits = self.forward(x)
         loss = self.cross_entropy_loss(logits, y)
         accuracy = self.accuracy(logits, y)
+
+        """
+        self.logger.log_hyperparams(
+            {'Learning Rate': self.lr, 'Layer 2 Size': self.layer_2_size, 'Layer 1 Size': self.layer_1_size,
+             'Batch Size': self.batch_size})
+        
+        """
+
+        #self.logger.log_metrics({'Train Loss': loss, 'Train Accuracy': accuracy})
 
         self.log("ptl/train_loss", loss)
         self.log("ptl/train_accuracy", accuracy)

@@ -1,4 +1,4 @@
-num_samples = 10
+num_trials = 10
 num_epochs = 2
 gpus_per_trial = 0
 cpus_per_trial = 6
