@@ -1,0 +1,10 @@
+{
+  "batch_size": 128,
+  "layer_1_size": 128,
+  "layer_2_size": 64,
+  "lr": 0.002851803273592743,
+  "mlflow": {
+    "experiment_name": "/Users/timo.bohnstedt@fau.de/Jiggsaw_test",
+    "tracking_uri": "databricks"
+  }
+}

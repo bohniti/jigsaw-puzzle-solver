@@ -1,10 +1,11 @@
-num_trials = 10
+num_trials = 1
 num_epochs = 2
 gpus_per_trial = 0
-cpus_per_trial = 6
-num_workers = 6
+cpus_per_trial = 9
+num_workers = 9
 raw_data_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/KMNIST/raw'
 result_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results'
+figures_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/figures/'
 
 [Scheduler]
     type = 'ASHAScheduler'

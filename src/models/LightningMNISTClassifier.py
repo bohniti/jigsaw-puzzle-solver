@@ -1,6 +1,7 @@
 # TODO Change os to pathlib because of windows, linux usbability
 import os
 
+import mlflow
 import pytorch_lightning as pl
 import torch
 from torch.nn import functional as F
@@ -9,6 +10,7 @@ from torchvision import transforms
 from torchvision.datasets import KMNIST
 
 
+# TODO Change pytorch version because of non support for autologging
 # TODO Refactors such that everything is in sperate Files
 # TODO Implement MLFlow Logger for Parameters
 # TODO Implement MLFlow credential in config
@@ -22,6 +24,11 @@ class LightningMNISTClassifier(pl.LightningModule):
         self.layer_2_size = hyperparameters["layer_2_size"]
         self.lr = hyperparameters["lr"]
         self.batch_size = hyperparameters["batch_size"]
+
+        mlflow.log_param("layer_1_size", hyperparameters["layer_1_size"])
+        mlflow.log_param("layer_2_size", hyperparameters["layer_2_size"])
+        mlflow.log_param("lr", hyperparameters["lr"])
+        mlflow.log_param("batch_size", hyperparameters["batch_size"])
 
         # mnist images are (1, 28, 28) (channels, width, height)
         self.layer_1 = torch.nn.Linear(28 * 28, self.layer_1_size)
@@ -65,7 +72,7 @@ class LightningMNISTClassifier(pl.LightningModule):
         
         """
 
-        #self.logger.log_metrics({'Train Loss': loss, 'Train Accuracy': accuracy})
+        # self.logger.log_metrics({'Train Loss': loss, 'Train Accuracy': accuracy})
 
         self.log("ptl/train_loss", loss)
         self.log("ptl/train_accuracy", accuracy)
