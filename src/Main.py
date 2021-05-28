@@ -8,9 +8,10 @@ from ray.tune.integration.mlflow import mlflow_mixin
 from ray.tune.integration.pytorch_lightning import TuneReportCallback
 from ray.tune.schedulers import ASHAScheduler
 import matplotlib.pyplot as plt
-from src.models.LightningMNISTClassifier import LightningMNISTClassifier
-from src.utils.utils import load_config
 import torch
+
+from models.LightningMNISTClassifier import LightningMNISTClassifier
+from utils.utils import load_config
 
 # mlflow.set_tracking_uri("databricks")
 # mlflow.set_experiment("/Jiggsaw_test")
@@ -115,10 +116,12 @@ def main(hyperparameters, config):
     plt.savefig(figures_dir + 'mean_accuracy.png')
     plt.show()
 
+
     df = analysis.results_df
     logdir = analysis.get_best_logdir("mean_accuracy", mode="max")
     print(logdir)
-    torch.save()
+    # TODO implement a correct inference step
+    #torch.save()
 
 
 if __name__ == "__main__":

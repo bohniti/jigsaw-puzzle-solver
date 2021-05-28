@@ -1,0 +1,8 @@
+name: docker-example
+
+docker_env:
+  image:  mlflow-docker-example
+
+entry_points:
+  main:
+    command: "python src/Main.py"
