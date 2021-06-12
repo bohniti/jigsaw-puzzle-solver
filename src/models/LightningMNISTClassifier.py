@@ -106,6 +106,7 @@ class LightningMNISTClassifier(pl.LightningModule):
             mnist_train, [55000, 5000])
 
     def train_dataloader(self):
+        # TODO num_workers to external files
         return DataLoader(self.mnist_train, batch_size=int(self.batch_size), num_workers=6)
 
     def val_dataloader(self):
