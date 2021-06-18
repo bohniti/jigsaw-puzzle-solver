@@ -18,9 +18,21 @@ import src.SiameseNetworkDataset
 # TODO Implement MLFlow credential in config
 class LightningMNISTClassifier(pl.LightningModule):
 
-    def __init__(self, hyperparameters, data_dir=None):
+    def __init__(self, hyperparameters, data_dir='/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv'):
+
         super(LightningMNISTClassifier, self).__init__()
-        self.data_dir = data_dir or os.getcwd()
+        self.data_dir = data_dir
+
+        transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.CenterCrop((378, 371))
+        ])
+
+        self.train_data = SiameseNetworkDataset(
+            csv_file=self.dataset + 'train.csv',transform=transform)
+
+        self.val_data = SiameseNetworkDataset(
+            csv_file=self.dataset + 'val.csv', transform=transform)
 
         self.layer_1_size = hyperparameters["layer_1_size"]
         self.layer_2_size = hyperparameters["layer_2_size"]
@@ -93,28 +105,11 @@ class LightningMNISTClassifier(pl.LightningModule):
         self.log("ptl/val_loss", avg_loss)
         self.log("ptl/val_accuracy", avg_acc)
 
-    @staticmethod
-    def download_data(data_dir):
-        transform = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.CenterCrop((378,371)),
-            transforms.Normalize((0.1307,), (0.3081,))
-        ])
-        return KMNIST(data_dir, train=True, download=True, transform=transform)
-        # return KMNIST(data_dir, train=True, download=True, transform=transform)
-
-    def prepare_data(self):
-        mnist_train = self.download_data(self.data_dir)
-
-        self.mnist_train, self.mnist_val = random_split(
-            mnist_train, [55000, 5000])
-
     def train_dataloader(self):
-        # TODO num_workers to external files
-        return DataLoader(self.mnist_train, batch_size=int(self.batch_size), num_workers=6)
+        return DataLoader(self.train_data, batch_size=int(self.batch_size), num_workers=6)
 
     def val_dataloader(self):
-        return DataLoader(self.mnist_val, batch_size=int(self.batch_size), num_workers=6)
+        return DataLoader(self.val_data, batch_size=int(self.batch_size), num_workers=6)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
