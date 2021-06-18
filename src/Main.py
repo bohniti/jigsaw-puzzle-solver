@@ -10,7 +10,7 @@ from ray.tune.schedulers import ASHAScheduler
 import matplotlib.pyplot as plt
 import torch
 
-from models.LightningMNISTClassifier import LightningMNISTClassifier
+from models.SiameseNetwork import SiameseNetwork
 from utils.utils import load_config
 
 # mlflow.set_tracking_uri("databricks")
@@ -21,7 +21,7 @@ logger = MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bo
 
 @mlflow_mixin
 def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
-    model = LightningMNISTClassifier(config, data_dir)
+    model = SiameseNetwork(config, data_dir)
     mlflow.autolog()
     trainer = pl.Trainer(
         max_epochs=num_epochs,
@@ -53,8 +53,6 @@ def main(hyperparameters, config):
     scheduler_grace_period = scheduler_config['grace_period']
     scheduler_reduction_factor = scheduler_config['reduction_factor']
     figures_dir = config['figures_dir']
-
-    LightningMNISTClassifier.download_data(raw_data_dir)
 
     scheduler = None
 

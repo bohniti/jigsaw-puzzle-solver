@@ -1,6 +1,8 @@
 import pandas as pd
+import numpy as np
 from cv2 import imread
 from torch.utils.data import Dataset
+import torch
 
 
 class SiameseNetworkDataset(Dataset):
@@ -15,11 +17,10 @@ class SiameseNetworkDataset(Dataset):
 
     def __getitem__(self, index):
         sample = self.df.loc[index]
-        print(sample[0])
-        print(sample[1])
+
         img_0 = imread(sample[0] + '.jpg')
         img_1 = imread(sample[1] + '.jpg')
-        y = sample.y
+        y = torch.from_numpy(np.array(sample.y, dtype=np.float32))
 
         if self.transform:
             img_0 = self.transform(img_0)
@@ -29,5 +30,4 @@ class SiameseNetworkDataset(Dataset):
 
     def __len__(self):
         length = self.df.shape[0]
-        print(length)
         return length

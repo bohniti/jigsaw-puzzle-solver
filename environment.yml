@@ -19,7 +19,7 @@ dependencies:
     - matplotlib
     - pytorch
     - torchvision
-    - pytorch-lightning
+    - pytorch-lightning <= 1.3.6
     - optuna
     - toml
     - pip:

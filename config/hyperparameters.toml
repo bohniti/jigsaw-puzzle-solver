@@ -1,11 +1,3 @@
-[layer_1_size]
-type = "choice"
-categories = [32, 64, 128]
-
-[layer_2_size]
-type = "choice"
-categories = [64, 128, 256]
-
 [lr]
 type = "loguniform"
 lower = 1e-4
