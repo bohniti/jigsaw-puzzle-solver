@@ -95,6 +95,7 @@ class LightningMNISTClassifier(pl.LightningModule):
     def download_data(data_dir):
         transform = transforms.Compose([
             transforms.ToTensor(),
+            transforms.CenterCrop((378,371)),
             transforms.Normalize((0.1307,), (0.3081,))
         ])
         return KMNIST(data_dir, train=True, download=True, transform=transform)
