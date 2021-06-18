@@ -1,5 +1,4 @@
 # TODO Change os to pathlib because of windows, linux usbability
-# TODO Change this model with the copy such that is naming correct!
 import os
 
 import mlflow
@@ -9,7 +8,6 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
 from torchvision.datasets import KMNIST
-import src.SiameseNetworkDataset
 
 
 # TODO Change pytorch version because of non support for autologging
@@ -101,7 +99,6 @@ class LightningMNISTClassifier(pl.LightningModule):
             transforms.Normalize((0.1307,), (0.3081,))
         ])
         return KMNIST(data_dir, train=True, download=True, transform=transform)
-        # return KMNIST(data_dir, train=True, download=True, transform=transform)
 
     def prepare_data(self):
         mnist_train = self.download_data(self.data_dir)

@@ -1,3 +1,5 @@
+# File not be used anymore!!!
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -80,7 +82,7 @@ for i, img in enumerate(images):
     img = copyMakeBorder(src=img, top=top, bottom=bottom, left=left, right=right, borderType=BORDER_CONSTANT, value=black)
     filename = pad_train_df.filenames.iloc[i]
     imwrite(train_result_path + filename + '.jpg', img)
-    
+
 print('Start reading pad test')
 # read pad test
 images = [imread(base_test_path + filename + '.jpg') for filename in pad_test_df.filenames]
@@ -90,7 +92,7 @@ for i, img in enumerate(images):
     img = copyMakeBorder(src=img, top=top, bottom=bottom, left=left, right=right, borderType=BORDER_CONSTANT, value=black)
     filename = pad_test_df.filenames.iloc[i]
     imwrite(test_result_path + filename + '.jpg', img)
-    
+
 # crop imgs which are defined above and in the train dataset
 # read crop train
 print('Start reading crop')
