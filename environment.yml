@@ -9,17 +9,15 @@ channels:
 
 dependencies:
     - python=3.8
-    - plotly=4.14.3
-    - nodejs
+    - tensorbaordx
     - ipykernel
     - numpy
     - pip
     - scikit-learn
     - opencv
     - matplotlib
-    - pytorch
     - torchvision
-    - pytorch-lightning <= 1.3.6
+    - pytorch-lightning
     - optuna
     - toml
     - pip:

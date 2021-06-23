@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from torchvision import transforms
 
 transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.CenterCrop((378, 371))
+    transforms.CenterCrop((378, 371)),
+    transforms.ToTensor()
 ])
 
 siamese_dataset = SiameseNetworkDataset(

@@ -1,4 +1,6 @@
 import math
+
+import matplotlib.pyplot as plt
 import mlflow
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import MLFlowLogger
@@ -7,10 +9,8 @@ from ray.tune import CLIReporter
 from ray.tune.integration.mlflow import mlflow_mixin
 from ray.tune.integration.pytorch_lightning import TuneReportCallback
 from ray.tune.schedulers import ASHAScheduler
-import matplotlib.pyplot as plt
-import torch
 
-from models.SiameseNetwork import SiameseNetwork
+from models.SiameseNetwork_V1 import SiameseNetwork
 from utils.utils import load_config
 
 # mlflow.set_tracking_uri("databricks")
@@ -24,16 +24,17 @@ def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
     model = SiameseNetwork(config, data_dir)
     mlflow.autolog()
     trainer = pl.Trainer(
+        #gradient_clip_val=0.5, gradient_clip_algorithm='norm',
         max_epochs=num_epochs,
-        #logger=logger,
-        # If fractional GPUs passed in, convert to int.
         gpus=math.ceil(num_gpus),
         progress_bar_refresh_rate=0,
         callbacks=[
             TuneReportCallback(
                 {
-                    "loss": "ptl/val_loss",
-                    "mean_accuracy": "ptl/val_accuracy"
+                    "avg_val_loss": "avg_val_loss",
+                    "avg_val_accuracy": "avg_val_accuracy",
+                    "avg_train_loss": "avg_train_loss",
+                    "avg_train_accuracy": "avg_train_accuracy"
                 },
                 on="validation_end")
         ])
@@ -47,7 +48,6 @@ def main(hyperparameters, config):
     cpus_per_trial = config['cpus_per_trial']
     raw_data_dir = config['raw_data_dir']
     result_dir = config['result_dir']
-    figures_dir = config['figures_dir']
     scheduler_config = config['Scheduler']
     scheduler_type = scheduler_config['grace_period']
     scheduler_grace_period = scheduler_config['grace_period']
@@ -65,8 +65,8 @@ def main(hyperparameters, config):
         NotImplementedError()
 
     reporter = CLIReporter(
-        parameter_columns=["layer_1_size", "layer_2_size", "lr", "batch_size"],
-        metric_columns=["loss", "mean_accuracy", "training_iteration"])
+        parameter_columns=["lr", "batch_size"],
+        metric_columns=["avg_val_loss", "avg_val_accuracy", "avg_train_loss", "avg_train_accuracy", "training_iteration"])
 
     hyperparameters['mlflow'] = {
         "experiment_name": "/Users/timo.bohnstedt@fau.de/Jiggsaw_test",
@@ -83,7 +83,7 @@ def main(hyperparameters, config):
             "cpu": cpus_per_trial,
             "gpu": gpus_per_trial
         },
-        metric="loss",
+        metric="avg_val_loss",
         mode="min",
         local_dir=result_dir,
         config=hyperparameters,
@@ -104,22 +104,40 @@ def main(hyperparameters, config):
     # Plot by epoch
     fig, ax = plt.subplots()
     for d in dfs.values():
-        ax = d.mean_accuracy.plot(ax=ax, legend=False)
+        ax = d.avg_train_loss.plot(ax=ax, legend=True)
+        ax = d.avg_val_loss.plot(ax=ax, legend=True)
 
     ax.set_xlabel("Epochs")
-    ax.set_ylabel("Mean Accuracy")
+    ax.set_ylabel("Train and Validation Loss")
     plt.title(best_config_string, fontsize=10, pad=20)
-    plt.suptitle(f'Mean Accuracy over {num_epochs} Epochs and {num_trials} Trails', fontsize=16)
+    plt.suptitle(f'Loss over {num_epochs} Epochs and {num_trials} Trails', fontsize=16)
+    plt.legend()
     fig.tight_layout()
-    plt.savefig(figures_dir + 'mean_accuracy.png')
+    plt.savefig(figures_dir + 'avrg_loss.png')
     plt.show()
+    plt.close()
 
+    # Plot by epoch
+    fig, ax = plt.subplots()
+    for d in dfs.values():
+        ax = d.avg_train_accuracy.plot(ax=ax, legend=True)
+        ax = d.avg_val_accuracy.plot(ax=ax, legend=True)
+
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("Train and Validation Accuracy")
+    plt.title(best_config_string, fontsize=10, pad=20)
+    plt.suptitle(f'Loss over {num_epochs} Epochs and {num_trials} Trails', fontsize=16)
+    plt.legend()
+    fig.tight_layout()
+    plt.savefig(figures_dir + 'avrg_accuracy.png')
+    plt.show()
+    plt.close()
 
     df = analysis.results_df
     logdir = analysis.get_best_logdir("mean_accuracy", mode="max")
     print(logdir)
     # TODO implement a correct inference step
-    #torch.save()
+    # torch.save()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-FROM rayproject/ray
+FROM rayproject/ray-ml
 USER root
 
 WORKDIR /usr/src/app

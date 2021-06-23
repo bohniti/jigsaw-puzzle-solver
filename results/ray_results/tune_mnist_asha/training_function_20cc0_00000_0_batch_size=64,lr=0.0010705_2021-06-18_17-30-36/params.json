@@ -1,8 +1,0 @@
-{
-  "batch_size": 64,
-  "lr": 0.0010704830928234118,
-  "mlflow": {
-    "experiment_name": "/Users/timo.bohnstedt@fau.de/Jiggsaw_test",
-    "tracking_uri": "databricks"
-  }
-}

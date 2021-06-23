@@ -1,9 +1,8 @@
 num_trials = 1
-num_epochs = 2
+num_epochs = 40
 gpus_per_trial = 0
-cpus_per_trial = 8
-num_workers = 8
-margin = 1.0
+cpus_per_trial = 16
+num_workers = 16
 raw_data_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/'
 result_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results'
 figures_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/figures/'
