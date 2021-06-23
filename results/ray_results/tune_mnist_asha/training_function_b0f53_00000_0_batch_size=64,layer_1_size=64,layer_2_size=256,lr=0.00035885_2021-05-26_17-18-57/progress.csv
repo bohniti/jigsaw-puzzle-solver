@@ -1,3 +1,0 @@
-loss,mean_accuracy,time_this_iter_s,done,timesteps_total,episodes_total,training_iteration,experiment_id,date,timestamp,time_total_s,pid,hostname,node_ip,time_since_restore,timesteps_since_restore,iterations_since_restore,trial_id
-0.32090139389038086,0.9034810066223145,17.373135328292847,False,,,1,a4d1477ff5bb4f4791fd2abd0cb23a18,2021-05-26_17-19-18,1622042358,17.373135328292847,14265,Timos-MacBook-Pro-2.local,192.168.2.103,17.373135328292847,0,1,b0f53_00000
-0.25496670603752136,0.9220727682113647,8.517966985702515,False,,,2,a4d1477ff5bb4f4791fd2abd0cb23a18,2021-05-26_17-19-26,1622042366,25.89110231399536,14265,Timos-MacBook-Pro-2.local,192.168.2.103,25.89110231399536,0,2,b0f53_00000
