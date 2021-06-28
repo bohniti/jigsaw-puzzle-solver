@@ -4,6 +4,8 @@ import torch
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
+import os
+from pathlib import Path
 
 
 class SiameseNetworkDataset(Dataset):
@@ -19,8 +21,13 @@ class SiameseNetworkDataset(Dataset):
     def __getitem__(self, index):
         sample = self.df.loc[index]
 
-        img_0 = Image.open(sample[0] + '.jpg')
-        img_1 = Image.open(sample[1] + '.jpg')
+        from pathlib import Path
+
+        full_path = str(Path.cwd())
+
+        # since I am an idiot and I used absolut paths I have to make weird changes in path
+        img_0 = Image.open(str(Path(full_path).parents[3]) + sample['0'] + '.jpg')
+        img_1 = Image.open(str(Path(full_path).parents[3]) + sample['1'] + '.jpg')
 
         y = torch.from_numpy(np.array(sample.y, dtype=np.float32))
 

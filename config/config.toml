@@ -1,5 +1,5 @@
 num_trials = 1
-num_epochs = 40
+num_epochs = 100
 gpus_per_trial = 0
 cpus_per_trial = 16
 num_workers = 16
