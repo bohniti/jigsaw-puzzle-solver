@@ -21,13 +21,13 @@ class SiameseNetworkDataset(Dataset):
     def __getitem__(self, index):
         sample = self.df.loc[index]
 
-        from pathlib import Path
+        # from pathlib import Path
 
-        full_path = str(Path.cwd())
+        # full_path = str(Path.cwd())
 
         # since I am an idiot and I used absolut paths I have to make weird changes in path
-        img_0 = Image.open(str(Path(full_path).parents[3]) + sample['0'] + '.jpg')
-        img_1 = Image.open(str(Path(full_path).parents[3]) + sample['1'] + '.jpg')
+        img_0 = Image.open('/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver' + sample['0'] + '.jpg')
+        img_1 = Image.open('/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver' + sample['1'] + '.jpg')
 
         y = torch.from_numpy(np.array(sample.y, dtype=np.float32))
 

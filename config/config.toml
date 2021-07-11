@@ -1,11 +1,11 @@
 num_trials = 1
 num_epochs = 100
-gpus_per_trial = 0
-cpus_per_trial = 16
-num_workers = 16
-raw_data_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/'
-result_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results'
-figures_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/figures/'
+gpus_per_trial = 1
+cpus_per_trial = 4
+num_workers = 4
+raw_data_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv'
+result_dir = '/home/hpc/iwi5/iwi5012h/ray_output'
+figures_dir = '/home/hpc/iwi5/iwi5012h/figure_output'
 
 [Scheduler]
     type = 'ASHAScheduler'
