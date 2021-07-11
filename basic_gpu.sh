@@ -15,11 +15,11 @@
 #PBS -N JigsawTestRun
 #
 # put output files into directory named output (needs to exist!)
-PBS -o /home/hpc/iwi5/iwi5012h/output
-PBS -e /home/hpc/iwi5/iwi5012h/output
+#PBS -o /home/hpc/iwi5/iwi5012h/output
+#PBS -e /home/hpc/iwi5/iwi5012h/output
 #
 # send mails
-PBS -M timo.bohnstedt@fau.de -m abe
+#PBS -M timo.bohnstedt@fau.de -m abe
 # first non-empty non-comment line ends PBS options
 
 # load Python 3.7
@@ -31,6 +31,7 @@ module load cuda/10.2
 #cd /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/
 
 # activate the venv environment stored in the "venv" directory
+conda init bash
 conda create -f environment.yml
 conda activate PuzzleSolver
 
