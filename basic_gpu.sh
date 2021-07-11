@@ -1,6 +1,7 @@
 #!/bin/bash -l
 #
-# I use this script to start jobs from within another script. We pass the name of the job and a variable CFG directly to the qsub command
+# I use this script to start jobs from within another script.
+# We pass the name of the job and a variable CFG directly to the qsub command
 # The variable CFG points to a config file that is used py the python script
 #
 # Submit like this: qsub.tinygpu basic_gpu.sh
