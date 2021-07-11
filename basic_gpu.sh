@@ -9,10 +9,10 @@
 # allocate 1 node, 4 cores, for 24 hours
 # one GPU per 4 cores (cores always have to be a multiple of 4)
 # We only request nodes that support avx, because PyTorch requires it (if you get a non-avx node, the script crashes)
-#PBS -l nodes=1:ppn=4:avx,walltime=24:00:00
+PBS -l nodes=1:ppn=4:avx,walltime=24:00:00
 #
 # Give the job a name (no spaces!)
-#PBS -N job_name 
+PBS -N JigsawTestRun
 #
 # put output files into directory named output (needs to exist!)
 PBS -o /home/hpc/iwi5/iwi5012h/output
