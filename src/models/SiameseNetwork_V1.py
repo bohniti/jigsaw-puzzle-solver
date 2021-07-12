@@ -71,8 +71,9 @@ class SiameseNetwork(pl.LightningModule):
         output1 = self.forward_once(input1).flatten()
         output2 = self.forward_once(input2).flatten()
         output = torch.abs(output1 - output2)
-        print(output.shape)
+
         output = self.fc1(output)
+        print(output.shape)
 
         return output
 
