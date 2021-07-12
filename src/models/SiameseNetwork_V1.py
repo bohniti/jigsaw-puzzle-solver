@@ -51,7 +51,7 @@ class SiameseNetwork(pl.LightningModule):
 
             nn.Linear(500, 500),
             nn.ReLU(inplace=True),
-            nn.Linear(500, 2)
+            nn.Linear(500, 256)
         )
 
     def binary_acc(self, y_pred, y_test):
