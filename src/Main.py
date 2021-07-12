@@ -5,26 +5,24 @@ import mlflow
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import MLFlowLogger
 import ray
+from ray import tune
+from ray.tune import CLIReporter
 from ray.tune.integration.mlflow import mlflow_mixin
-#from ray import tune
-#from ray.tune import CLIReporter
-#from ray.tune.integration.mlflow import mlflow_mixin
-#from ray.tune.integration.pytorch_lightning import TuneReportCallback
-#from ray.tune.schedulers import ASHAScheduler
-
+from ray.tune.integration.pytorch_lightning import TuneReportCallback
+from ray.tune.schedulers import ASHAScheduler
 from models.SiameseNetwork_V1 import SiameseNetwork
 from utils.utils import load_config
 
 # mlflow.set_tracking_uri("databricks")
 # mlflow.set_experiment("/Jiggsaw_test")
 
-logger = MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test")
+#logger = MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test")
 
 
-@mlflow_mixin
+
 def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
     model = SiameseNetwork(config, data_dir)
-    mlflow.autolog()
+
     trainer = pl.Trainer(
         #gradient_clip_val=0.5, gradient_clip_algorithm='norm',
         max_epochs=num_epochs,
