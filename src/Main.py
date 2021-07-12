@@ -5,7 +5,7 @@ import mlflow
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import MLFlowLogger
 import ray
-
+from ray.tune.integration.mlflow import mlflow_mixin
 #from ray import tune
 #from ray.tune import CLIReporter
 #from ray.tune.integration.mlflow import mlflow_mixin
