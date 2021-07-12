@@ -33,10 +33,10 @@ class SiameseNetwork(pl.LightningModule):
         ])
 
         self.train_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + 'dev_train.csv', transform=self.transform)
+            csv_file=self.data_dir + '/dev_train.csv', transform=self.transform)
 
         self.val_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + 'dev_val.csv', transform=self.transform)
+            csv_file=self.data_dir + '/dev_val.csv', transform=self.transform)
 
         # TODO Parameterize it
         self.margin = 1.0
