@@ -31,12 +31,7 @@ module load cuda/10.2
 #cd /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/
 
 # activate the venv environment stored in the "venv" directory
-conda init bash
-conda create -f environment.yml
-conda activate PuzzleSolver
-
-# activate env
-conda activate PuzzleSolver
+source newenv/bin/activate
 
 # start the script main.py
 python3 src/main.py
