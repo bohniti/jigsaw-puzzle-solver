@@ -4,11 +4,13 @@ import matplotlib.pyplot as plt
 import mlflow
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import MLFlowLogger
-from ray import tune
-from ray.tune import CLIReporter
-from ray.tune.integration.mlflow import mlflow_mixin
-from ray.tune.integration.pytorch_lightning import TuneReportCallback
-from ray.tune.schedulers import ASHAScheduler
+import ray
+
+#from ray import tune
+#from ray.tune import CLIReporter
+#from ray.tune.integration.mlflow import mlflow_mixin
+#from ray.tune.integration.pytorch_lightning import TuneReportCallback
+#from ray.tune.schedulers import ASHAScheduler
 
 from models.SiameseNetwork_V1 import SiameseNetwork
 from utils.utils import load_config

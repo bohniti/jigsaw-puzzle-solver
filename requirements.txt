@@ -9,5 +9,5 @@ torchvision
 pytorch-lightning
 optuna
 toml
-ray
+ray[tune]
 mlflow
