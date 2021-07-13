@@ -33,10 +33,10 @@ class SiameseNetwork(pl.LightningModule):
         ])
 
         self.train_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + '/dev_train.csv', transform=self.transform)
+            csv_file=self.data_dir + '/train.csv', transform=self.transform)
 
         self.val_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + '/dev_val.csv', transform=self.transform)
+            csv_file=self.data_dir + '/val.csv', transform=self.transform)
 
         # TODO Parameterize it
         self.margin = 1.0
@@ -46,12 +46,12 @@ class SiameseNetwork(pl.LightningModule):
         self.cnn1 = models.resnet50(pretrained=False)
 
         self.fc1 = nn.Sequential(
-            nn.Linear(4000, 500),
+            nn.Linear(256000, 500),
             nn.ReLU(inplace=True),
 
             nn.Linear(500, 500),
             nn.ReLU(inplace=True),
-            nn.Linear(500, 256)
+            nn.Linear(500, 8)
         )
 
     def binary_acc(self, y_pred, y_test):
@@ -81,14 +81,17 @@ class SiameseNetwork(pl.LightningModule):
         x0, x1, y = batch
         output = self(x0, x1)
         loss = self.criterion(output, y)
+
         self.log('train_loss', loss, prog_bar=True)
         acc = self.binary_acc(output, y)
+
         self.log('train_acc', acc, prog_bar=True)
         return {"loss": loss, "accuracy": acc}
 
     def validation_step(self, batch, batch_idx):
         x0, x1, y = batch
         output = self(x0, x1)
+
         loss = self.criterion(output, y)
         self.log('val_loss', loss, prog_bar=True)
         acc = self.binary_acc(output, y)

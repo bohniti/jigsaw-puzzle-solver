@@ -26,8 +26,11 @@ class SiameseNetworkDataset(Dataset):
         # full_path = str(Path.cwd())
 
         # since I am an idiot and I used absolut paths I have to make weird changes in path
-        img_0 = Image.open('/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver' + sample['0'] + '.jpg')
-        img_1 = Image.open('/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver' + sample['1'] + '.jpg')
+        #img_0 = Image.open('/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver' + sample['0'] + '.jpg')
+        #img_1 = Image.open('/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver' + sample['1'] + '.jpg')
+
+        img_0 = Image.open('/Users/beantown/PycharmProjects/jigsaw-puzzle-solver' + sample['0'] + '.jpg')
+        img_1 = Image.open('/Users/beantown/PycharmProjects/jigsaw-puzzle-solver' + sample['1'] + '.jpg')
 
         y = torch.from_numpy(np.array(sample.y, dtype=np.float32))
 
