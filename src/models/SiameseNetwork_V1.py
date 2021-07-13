@@ -27,7 +27,7 @@ class SiameseNetwork(pl.LightningModule):
 
         # init trianing hyperparameters ...
         self.transform = transforms.Compose([
-            transforms.CenterCrop(256),
+            transforms.CenterCrop(512),
             # transforms.Grayscale(num_output_channels=1),
             transforms.ToTensor()
         ])
@@ -46,12 +46,12 @@ class SiameseNetwork(pl.LightningModule):
         self.cnn1 = models.resnet50(pretrained=False)
 
         self.fc1 = nn.Sequential(
-            nn.Linear(32000, 500),
+            nn.Linear(16000, 500),
             nn.ReLU(inplace=True),
 
             nn.Linear(500, 500),
             nn.ReLU(inplace=True),
-            nn.Linear(500, 32)
+            nn.Linear(500, 16)
         )
 
     def binary_acc(self, y_pred, y_test):
