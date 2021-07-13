@@ -27,7 +27,7 @@ class SiameseNetwork(pl.LightningModule):
 
         # init trianing hyperparameters ...
         self.transform = transforms.Compose([
-            transforms.CenterCrop(512),
+            transforms.CenterCrop(256),
             # transforms.Grayscale(num_output_channels=1),
             transforms.ToTensor()
         ])
