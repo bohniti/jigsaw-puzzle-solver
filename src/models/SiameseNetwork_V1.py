@@ -114,10 +114,10 @@ class SiameseNetwork(pl.LightningModule):
         return self.validation_step(batch, batch_idx)
 
     def train_dataloader(self):
-        return DataLoader(self.train_data, batch_size=int(self.hyperparameters["batch_size"]), num_workers=6)
+        return DataLoader(self.train_data, batch_size=int(self.hyperparameters["batch_size"]), num_workers=4)
 
     def val_dataloader(self):
-        return DataLoader(self.val_data, batch_size=int(self.hyperparameters["batch_size"]), num_workers=6)
+        return DataLoader(self.val_data, batch_size=int(self.hyperparameters["batch_size"]), num_workers=4)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.hyperparameters["lr"])
