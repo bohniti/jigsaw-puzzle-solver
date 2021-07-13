@@ -46,7 +46,7 @@ class SiameseNetwork(pl.LightningModule):
         self.cnn1 = models.resnet50(pretrained=False)
 
         self.fc1 = nn.Sequential(
-            nn.Linear(256000, 500),
+            nn.Linear(128000, 500),
             nn.ReLU(inplace=True),
 
             nn.Linear(500, 500),

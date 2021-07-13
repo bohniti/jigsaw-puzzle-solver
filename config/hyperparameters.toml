@@ -4,4 +4,4 @@ categories = [0.001]
 
 [batch_size]
 type = "choice"
-categories = [256]
+categories = [128]
