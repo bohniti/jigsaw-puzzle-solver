@@ -1,4 +1,4 @@
-num_trials = 1
+num_trials = 2
 num_epochs = 2
 gpus_per_trial = 1
 cpus_per_trial = 4
