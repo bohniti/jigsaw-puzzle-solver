@@ -30,7 +30,7 @@ def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
         callbacks=[
             TuneReportCallback(
                 {
-                    "train_loss":"train_loss",
+                    "train_loss" : "train_loss",
                     "avg_val_loss": "avg_val_loss",
                     "avg_val_accuracy": "avg_val_accuracy",
                     "avg_train_loss": "avg_train_loss",

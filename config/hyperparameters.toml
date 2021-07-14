@@ -1,7 +1,12 @@
 [lr]
-type = "choice"
-categories = [0.001]
+type = "loguniform"
+lower = 1e-4
+upper = 1e-2
 
 [batch_size]
 type = "choice"
-categories = [16]
+categories = [32]
+
+[activation]
+type = "choice"
+categories = ['Relu','Selu']

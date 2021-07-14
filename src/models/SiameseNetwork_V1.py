@@ -14,6 +14,8 @@ from torchvision import transforms
 # TODO Refactors such that everything is in sperate Files
 # TODO Implement MLFlow Logger for Parameters
 # TODO Implement MLFlow credential in config
+
+
 class SiameseNetwork(pl.LightningModule):
 
     def __init__(self, hyperparameters,
@@ -45,14 +47,25 @@ class SiameseNetwork(pl.LightningModule):
 
         self.cnn1 = models.resnet50(pretrained=False)
 
-        self.fc1 = nn.Sequential(
-            nn.Linear(16000, 500),
-            nn.ReLU(inplace=True),
+        if self.hyperparameters["batch_size"] == 'RelU':
 
-            nn.Linear(500, 500),
-            nn.ReLU(inplace=True),
-            nn.Linear(500, 16)
-        )
+            self.fc1 = nn.Sequential(
+                nn.Linear(32000, 500),
+                nn.ReLU(inplace=True),
+
+                nn.Linear(500, 500),
+                nn.ReLU(inplace=True),
+                nn.Linear(500, 32)
+            )
+        else:s
+            self.fc1 = nn.Sequential(
+                nn.Linear(32000, 500),
+                nn.SELU(inplace=True),
+
+                nn.Linear(500, 500),
+                nn.SELU(inplace=True),
+                nn.Linear(500, 32)
+            )
 
     def binary_acc(self, y_pred, y_test):
         y_pred_tag = torch.round(torch.sigmoid(y_pred))
@@ -71,9 +84,9 @@ class SiameseNetwork(pl.LightningModule):
         output1 = self.forward_once(input1).flatten()
         output2 = self.forward_once(input2).flatten()
         output = torch.abs(output1 - output2)
-        print(output.shape)
+        #print(output.shape)
         output = self.fc1(output)
-        print(output.shape)
+        #print(output.shape)
 
         return output
 
