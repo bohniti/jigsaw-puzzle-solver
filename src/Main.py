@@ -19,15 +19,16 @@ from utils.utils import load_config
 
 #logger = MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test"
 
-torch.cuda.empty_cache()
-
-def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
+#torch.cuda.empty_cache()
+#num_gpus=0
+def training_function(config, data_dir=None, num_epochs=10):
+    tune.util.wait_for_gpu()
     model = SiameseNetwork(config, data_dir)
 
     trainer = pl.Trainer(
         #gradient_clip_val=0.5, gradient_clip_algorithm='norm',
         max_epochs=num_epochs,
-        gpus=math.ceil(num_gpus),
+        #gpus=math.ceil(num_gpus),
         progress_bar_refresh_rate=0,
         callbacks=[
             TuneReportCallback(
@@ -80,7 +81,7 @@ def main(hyperparameters, config):
             training_function,
             data_dir=raw_data_dir,
             num_epochs=num_epochs,
-            num_gpus=gpus_per_trial
+            #num_gpus=gpus_per_trial
         ),
         resources_per_trial={
             "cpu": cpus_per_trial,
