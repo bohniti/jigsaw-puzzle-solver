@@ -19,6 +19,8 @@ from utils.utils import load_config
 
 #logger = MLFlowLogger(tracking_uri='databricks', experiment_name="/Users/timo.bohnstedt@fau.de/Jiggsaw_test"
 
+torch.cuda.empty_cache()
+
 def training_function(config, data_dir=None, num_epochs=10, num_gpus=0):
     model = SiameseNetwork(config, data_dir)
 
