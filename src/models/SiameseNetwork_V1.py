@@ -50,7 +50,7 @@ class SiameseNetwork(pl.LightningModule):
         if self.hyperparameters["batch_size"] == 'RelU':
 
             self.fc1 = nn.Sequential(
-                nn.Linear(16000, 500),
+                nn.Linear(8000, 500),
                 nn.ReLU(inplace=True),
 
                 nn.Linear(500, 500),
@@ -59,7 +59,7 @@ class SiameseNetwork(pl.LightningModule):
             )
         else:
             self.fc1 = nn.Sequential(
-                nn.Linear(16000, 500),
+                nn.Linear(8000, 500),
                 nn.SELU(inplace=True),
 
                 nn.Linear(500, 500),
