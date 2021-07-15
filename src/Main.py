@@ -65,7 +65,7 @@ def main(hyperparameters, config):
         NotImplementedError()
 
     reporter = CLIReporter(
-        parameter_columns=["lr", "batch_size", "activation"],
+        parameter_columns=["lr", "batch_size", "activation", "binary_margin"],
         metric_columns=["avg_val_loss", "avg_val_accuracy", "avg_train_loss", "avg_train_accuracy", "training_iteration"])
 
     hyperparameters['mlflow'] = {
