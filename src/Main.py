@@ -13,6 +13,7 @@ from ray.tune.integration.pytorch_lightning import TuneReportCallback
 from ray.tune.schedulers import ASHAScheduler
 from models.SiameseNetwork_V1 import SiameseNetwork
 from utils.utils import load_config
+import ray.tune.utils
 
 #mlflow.set_tracking_uri("databricks")
 #mlflow.set_experiment("/Jiggsaw_test")
