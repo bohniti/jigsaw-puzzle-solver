@@ -41,7 +41,7 @@ class SiameseNetwork(pl.LightningModule):
             csv_file=self.data_dir + '/val.csv', transform=self.transform)
 
         # TODO Parameterize it
-        self.margin = 1.0
+        self.margin = self.hyperparameters["binary_margin"]
 
         self.criterion = nn.BCEWithLogitsLoss()
 
@@ -55,7 +55,7 @@ class SiameseNetwork(pl.LightningModule):
 
                 nn.Linear(500, 500),
                 nn.ReLU(inplace=True),
-                nn.Linear(500, 16)
+                nn.Linear(500, 8)
             )
         else:
             self.fc1 = nn.Sequential(
@@ -64,7 +64,7 @@ class SiameseNetwork(pl.LightningModule):
 
                 nn.Linear(500, 500),
                 nn.SELU(inplace=True),
-                nn.Linear(500, 16)
+                nn.Linear(500, 8)
             )
 
     def binary_acc(self, y_pred, y_test):
