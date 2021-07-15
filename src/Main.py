@@ -78,7 +78,7 @@ def main(hyperparameters, config):
             training_function,
             data_dir=raw_data_dir,
             num_epochs=num_epochs,
-            #num_gpus=gpus_per_trial
+            num_gpus=gpus_per_trial
         ),
         resources_per_trial={
             "cpu": cpus_per_trial,

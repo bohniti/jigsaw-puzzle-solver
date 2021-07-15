@@ -1,7 +1,7 @@
-num_trials = 2
+num_trials = 4
 num_epochs = 2
-gpus_per_trial = 1
-cpus_per_trial = 4
+gpus_per_trial = 4
+cpus_per_trial = 32
 num_workers = 4
 raw_data_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv'
 result_dir = '/home/hpc/iwi5/iwi5012h/ray_output'
