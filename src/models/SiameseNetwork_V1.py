@@ -50,21 +50,21 @@ class SiameseNetwork(pl.LightningModule):
         if self.hyperparameters["batch_size"] == 'RelU':
 
             self.fc1 = nn.Sequential(
-                nn.Linear(32000, 500),
+                nn.Linear(16000, 500),
                 nn.ReLU(inplace=True),
 
                 nn.Linear(500, 500),
                 nn.ReLU(inplace=True),
-                nn.Linear(500, 32)
+                nn.Linear(500, 16)
             )
         else:
             self.fc1 = nn.Sequential(
-                nn.Linear(32000, 500),
+                nn.Linear(16000, 500),
                 nn.SELU(inplace=True),
 
                 nn.Linear(500, 500),
                 nn.SELU(inplace=True),
-                nn.Linear(500, 32)
+                nn.Linear(500, 16)
             )
 
     def binary_acc(self, y_pred, y_test):

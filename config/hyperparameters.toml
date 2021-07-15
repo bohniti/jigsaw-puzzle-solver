@@ -5,7 +5,7 @@ upper = 1e-2
 
 [batch_size]
 type = "choice"
-categories = [32]
+categories = [16]
 
 [activation]
 type = "choice"
