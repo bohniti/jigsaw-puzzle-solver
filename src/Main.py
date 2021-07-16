@@ -22,6 +22,8 @@ import ray.tune.utils
 
 #torch.cuda.empty_cache()
 #num_gpus=0
+
+
 def training_function(config, data_dir=None, num_epochs=10):
     #tune.util.wait_for_gpu()
     model = SiameseNetwork(config, data_dir)
