@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 from SiameseNetworkDataset import SiameseNetworkDataset
+from ResNet50 import pdresnet50
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
@@ -35,36 +36,36 @@ class SiameseNetwork(pl.LightningModule):
         ])
 
         self.train_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + '/train.csv', transform=self.transform)
+            csv_file=self.data_dir + '/train_dev.csv', transform=self.transform)
 
         self.val_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + '/val.csv', transform=self.transform)
+            csv_file=self.data_dir + '/val_dev.csv', transform=self.transform)
 
         # TODO Parameterize it
         self.margin = self.hyperparameters["binary_margin"]
 
         self.criterion = nn.BCEWithLogitsLoss()
 
-        self.cnn1 = models.resnet50(pretrained=False)
+        self.cnn1 = pdresnet50(pretrained=False)
 
         if self.hyperparameters["batch_size"] == 'RelU':
 
             self.fc1 = nn.Sequential(
-                nn.Linear(8000, 500),
+                nn.Linear(2000, 500),
                 nn.ReLU(inplace=True),
 
                 nn.Linear(500, 500),
                 nn.ReLU(inplace=True),
-                nn.Linear(500, 8)
+                nn.Linear(500, 2)
             )
         else:
             self.fc1 = nn.Sequential(
-                nn.Linear(8000, 500),
+                nn.Linear(2000, 500),
                 nn.SELU(inplace=True),
 
                 nn.Linear(500, 500),
                 nn.SELU(inplace=True),
-                nn.Linear(500, 8)
+                nn.Linear(500, 2)
             )
 
     def binary_acc(self, y_pred, y_test):
