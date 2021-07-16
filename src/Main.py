@@ -11,7 +11,7 @@ from ray.tune.integration.mlflow import mlflow_mixin
 from ray.tune.schedulers import ASHAScheduler
 from ray.tune.integration.pytorch_lightning import TuneReportCallback
 from ray.tune.schedulers import ASHAScheduler
-from models.SiameseNetwork_V1 import SiameseNetwork
+from models.SiameseNetwork_Partial_Convolution import SiameseNetwork
 from utils.utils import load_config
 import ray.tune.utils
 
