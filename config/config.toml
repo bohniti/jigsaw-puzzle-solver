@@ -6,6 +6,8 @@ num_workers = 4
 raw_data_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv'
 result_dir = '/home/hpc/iwi5/iwi5012h/ray_output'
 figures_dir = '/home/hpc/iwi5/iwi5012h/figure_output'
+
+
 #raw_data_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv'
 #result_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/ray_results'
 #figures_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/figures'
