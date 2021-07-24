@@ -31,7 +31,7 @@ def main(config_file_name):
     val_dataloader = DataLoader(dataset2, batch_size=config['batch_size'], num_workers=config['num_workers'])
 
     model = SiameseNetwork(batch_size=config['batch_size'], learning_rate=config['learning_rate'],
-                           margin=config['margin'])
+                           margin=config['margin'], partial_conf=config['partial_conf'])
 
     tb_logger = pl_loggers.TensorBoardLogger(
         save_dir=config['save_dir'])

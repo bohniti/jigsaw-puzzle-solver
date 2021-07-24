@@ -2,6 +2,7 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torchvision.models as models
+#from src.models.ResNet50 import pdresnet50
 
 
 class SiameseNetwork(pl.LightningModule):
