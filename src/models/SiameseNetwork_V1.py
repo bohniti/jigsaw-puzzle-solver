@@ -18,54 +18,24 @@ from torchvision import transforms
 
 class SiameseNetwork(pl.LightningModule):
 
-    def __init__(self, hyperparameters,
-                 data_dir='/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/'):
+    def __init__(self):
         # Inherit from base class
         super().__init__()
 
-        self.hyperparameters = hyperparameters
-
-        self.data_dir = data_dir
-
-        # init trianing hyperparameters ...
-        self.transform = transforms.Compose([
-            transforms.CenterCrop(512),
-            # transforms.Grayscale(num_output_channels=1),
-            transforms.ToTensor()
-        ])
-
-        self.train_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + '/train.csv', transform=self.transform)
-
-        self.val_data = SiameseNetworkDataset(
-            csv_file=self.data_dir + '/val.csv', transform=self.transform)
-
-        # TODO Parameterize it
-        self.margin = self.hyperparameters["binary_margin"]
+        self.margin = 0.9
 
         self.criterion = nn.BCEWithLogitsLoss()
 
         self.cnn1 = models.resnet50(pretrained=False)
 
-        if self.hyperparameters["batch_size"] == 'RelU':
+        self.fc1 = nn.Sequential(
+            nn.Linear(8000, 500),
+            nn.ReLU(inplace=True),
 
-            self.fc1 = nn.Sequential(
-                nn.Linear(8000, 500),
-                nn.ReLU(inplace=True),
-
-                nn.Linear(500, 500),
-                nn.ReLU(inplace=True),
-                nn.Linear(500, 8)
-            )
-        else:
-            self.fc1 = nn.Sequential(
-                nn.Linear(8000, 500),
-                nn.SELU(inplace=True),
-
-                nn.Linear(500, 500),
-                nn.SELU(inplace=True),
-                nn.Linear(500, 8)
-            )
+            nn.Linear(500, 500),
+            nn.ReLU(inplace=True),
+            nn.Linear(500, 8)
+        )
 
     def binary_acc(self, y_pred, y_test):
         y_pred_tag = torch.round(torch.sigmoid(y_pred))
@@ -84,31 +54,28 @@ class SiameseNetwork(pl.LightningModule):
         output1 = self.forward_once(input1).flatten()
         output2 = self.forward_once(input2).flatten()
         output = torch.abs(output1 - output2)
-        #print(output.shape)
         output = self.fc1(output)
-        #print(output.shape)
-
         return output
 
     def training_step(self, batch, batch_idx):
         x0, x1, y = batch
         output = self(x0, x1)
         loss = self.criterion(output, y)
-
-        self.log('train_loss', loss, prog_bar=True)
         acc = self.binary_acc(output, y)
 
-        self.log('train_acc', acc, prog_bar=True)
+        self.log('train_loss', loss, prog_bar=True, logger=True)
+        self.log('train_acc', acc, prog_bar=True, logger=True)
+
         return {"loss": loss, "accuracy": acc}
 
     def validation_step(self, batch, batch_idx):
         x0, x1, y = batch
         output = self(x0, x1)
-
         loss = self.criterion(output, y)
-        self.log('val_loss', loss, prog_bar=True)
         acc = self.binary_acc(output, y)
-        self.log('val_acc', acc, prog_bar=True)
+
+        self.log('val_acc', acc, prog_bar=True, logger=True)
+        self.log('val_loss', loss, prog_bar=True, logger=True)
         return {"val_loss": loss, "val_accuracy": acc}
 
     def validation_epoch_end(self, outputs):
@@ -126,14 +93,6 @@ class SiameseNetwork(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         return self.validation_step(batch, batch_idx)
 
-    def train_dataloader(self):
-        return DataLoader(self.train_data, batch_size=int(self.hyperparameters["batch_size"]), num_workers=4,
-                          drop_last=True)
-
-    def val_dataloader(self):
-        return DataLoader(self.val_data, batch_size=int(self.hyperparameters["batch_size"]), num_workers=4,
-                          drop_last=True)
-
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.hyperparameters["lr"])
+        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
         return optimizer
