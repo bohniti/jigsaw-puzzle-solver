@@ -5,10 +5,10 @@ from ray import tune
 def load_config(name, show=True, tune_config=True):
     # TODO make this work in a clean way for every domin (docker, mac, win ...)
     try:
-        file = toml.load('../config/' + name + '.toml')
+        file = toml.load(name)
 
     except:
-        file = toml.load('./config/' + name + '.toml')
+        file = toml.load(name)
 
     if tune_config:
         config = {}

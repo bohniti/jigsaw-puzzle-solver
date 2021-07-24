@@ -41,9 +41,9 @@ def main(config_file_name):
 
 if __name__ == "__main__":
     if platform == "linux" or platform == "linux2":
-        config = 'config'
+        config = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/config/config.toml'
     elif platform == "darwin":
-        config = 'config_local'
+        config = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/config/config_local.toml'
     elif platform == "win32":
         raise NotImplementedError
 
