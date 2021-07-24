@@ -2,6 +2,7 @@ data
 data/KMNIST/
 src/__pycache__/*
 src/models/__pycache__/*
-
+*.pyc
+*.pyo
 /results/
 /.ipynb_checkpoints/
