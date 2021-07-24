@@ -1,3 +1,5 @@
+from sys import platform
+
 import pytorch_lightning as pl
 from pytorch_lightning import loggers as pl_loggers
 from torch.utils.data import DataLoader
@@ -33,9 +35,16 @@ def main(config_file_name):
     tb_logger = pl_loggers.TensorBoardLogger(
         save_dir=config['save_dir'])
     trainer = pl.Trainer(min_epochs=config['min_epochs'], max_epochs=config['max_epochs'], logger=tb_logger,
-                         gpus=config['gpus'])
+                         gpus=config['gpus'], default_root_dir=config['default_root_dir'])
     trainer.fit(model, train_dataloader, val_dataloader)
 
 
 if __name__ == "__main__":
-    main('config')
+    if platform == "linux" or platform == "linux2":
+        config = 'config'
+    elif platform == "darwin":
+        config = 'config_local'
+    elif platform == "win32":
+        raise NotImplementedError
+
+    main(config)

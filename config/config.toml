@@ -3,6 +3,7 @@ gpus = 1
 batch_size = 8
 num_workers = 6
 save_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/logs/'
+default_root_dir = 'home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/checkpoints/'
 train_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_train.csv'
 val_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_val.csv'
 raw_img_path = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver'
