@@ -1,0 +1,154 @@
+Starting prologue... Sat Jul 24 14:26:22 CEST 2021
+Master node: tg074
+Restricting access to NVidia GPUs ...
+... enabling access to GPU3
+Power management available, enabling ondemand governor on cores 12 13 14 15
+===== some GPU information for tg074 =====
+NVRM version: NVIDIA UNIX x86_64 Kernel Module  465.19.01  Fri Mar 19 07:44:41 UTC 2021
+GPU 00000000:AF:00.0
+    Product Name                          : NVIDIA Tesla V100-PCIE-32GB
+    Fan Speed                             : N/A
+    FB Memory           Total                : 32510 MiB
+    BAR1 Memory           Total                : 32768 MiB
+    Ecc Mode         Current              : Enabled
+    Temperature      GPU Current Temp     : 42 C
+        GPU Target Temperature         : N/A         Memory Current Temp  : 40 C
+================================
+
+End of prologue on tg074.
+G̲e̲n̲e̲r̲a̲l̲ ̲C̲o̲n̲f̲i̲g̲u̲r̲a̲t̲i̲o̲n̲:
+center_crop: 512 
+gpus: 1 
+batch_size: 8 
+num_workers: 6 
+save_dir: /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/logs/ 
+default_root_dir: home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/checkpoints/ 
+train_file: /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_train.csv 
+val_file: /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_val.csv 
+raw_img_path: /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver 
+min_epochs: 1 
+max_epochs: 30 
+
+8
+Validation sanity check: 0it [00:00, ?it/s]                                           Starting epilogue...
+Clearing cache...
+=== JOB_STATISTICS ===
+=== current date     : Sat Jul 24 14:26:43 CEST 2021
+= Job-ID             : 578329.tgadm1.rrze.uni-erlangen.de
+= Job-Name           : JigsawTestRun
+= Queue              : work
+= PBS_O_WORKDIR      : /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver
+= Requested resources: mem=23000mb,neednodes=1:ppn=4:avx:v100,nodes=1:ppn=4:avx:v100,walltime=24:00:00
+= Used resources     : cput=00:00:07,energy_used=0,mem=2976676kb,vmem=9855496kb,walltime=00:00:20
+= Node list          : tg074
+= CPUset on master   : 12-15
+======================
+Power management available, clocking down CPUs 12 13 14 15
+=== GPU utilization
+gpu_bus_id, pid, max_memory_usage [MiB], gpu_utilization [%], mem_utilization [%], time [ms]
+00000000:AF:00.0, 9665, 1663 MiB, 24 %, 8 %, 19242489 ms
+00000000:AF:00.0, 9669, 1663 MiB, 24 %, 8 %, 19242509 ms
+00000000:AF:00.0, 9660, 1663 MiB, 24 %, 8 %, 19242591 ms
+00000000:AF:00.0, 9674, 1663 MiB, 24 %, 8 %, 19242506 ms
+00000000:AF:00.0, 2519, 1663 MiB, 24 %, 8 %, 19232564 ms
+00000000:AF:00.0, 2523, 1663 MiB, 24 %, 8 %, 19232438 ms
+00000000:AF:00.0, 2531, 1663 MiB, 24 %, 8 %, 19232494 ms
+00000000:AF:00.0, 2527, 1663 MiB, 24 %, 8 %, 19232543 ms
+00000000:AF:00.0, 27848, 1663 MiB, 24 %, 8 %, 19253163 ms
+00000000:AF:00.0, 27852, 1663 MiB, 24 %, 8 %, 19253249 ms
+00000000:AF:00.0, 27856, 1663 MiB, 24 %, 8 %, 19253245 ms
+00000000:AF:00.0, 27844, 1663 MiB, 24 %, 8 %, 19253301 ms
+00000000:AF:00.0, 20885, 1663 MiB, 24 %, 8 %, 19254248 ms
+00000000:AF:00.0, 20889, 1663 MiB, 24 %, 8 %, 19254268 ms
+00000000:AF:00.0, 20893, 1663 MiB, 24 %, 8 %, 19254206 ms
+00000000:AF:00.0, 20897, 1663 MiB, 24 %, 8 %, 19254274 ms
+00000000:AF:00.0, 24258, 561 MiB, 70 %, 2 %, 3224976 ms
+00000000:AF:00.0, 30384, 3573 MiB, 78 %, 21 %, 24718604 ms
+00000000:AF:00.0, 27826, 13989 MiB, 93 %, 52 %, 1474610 ms
+00000000:AF:00.0, 31827, 32397 MiB, 70 %, 13 %, 2047918 ms
+00000000:AF:00.0, 3338, 32397 MiB, 72 %, 13 %, 626585 ms
+00000000:AF:00.0, 23707, 31867 MiB, 82 %, 51 %, 316120 ms
+00000000:AF:00.0, 4588, 6633 MiB, 79 %, 4 %, 86374024 ms
+00000000:AF:00.0, 27263, 31969 MiB, 26 %, 5 %, 19208 ms
+00000000:AF:00.0, 28017, 32243 MiB, 66 %, 11 %, 86415928 ms
+00000000:AF:00.0, 13856, 431 MiB, 54 %, 5 %, 84683773 ms
+00000000:AF:00.0, 1508, 13763 MiB, 21 %, 14 %, 692475 ms
+00000000:AF:00.0, 3249, 17979 MiB, 0 %, 0 %, 232468 ms
+00000000:AF:00.0, 4263, 13841 MiB, 0 %, 0 %, 203697 ms
+00000000:AF:00.0, 5427, 9915 MiB, 0 %, 0 %, 201942 ms
+00000000:AF:00.0, 10060, 9915 MiB, 1 %, 0 %, 86722 ms
+00000000:AF:00.0, 11864, 9915 MiB, 0 %, 0 %, 123268 ms
+00000000:AF:00.0, 12662, 12473 MiB, 0 %, 0 %, 106966 ms
+00000000:AF:00.0, 14148, 431 MiB, 54 %, 5 %, 84684204 ms
+00000000:AF:00.0, 30570, 31845 MiB, 2 %, 1 %, 63192 ms
+00000000:AF:00.0, 31133, 31893 MiB, 36 %, 25 %, 38705 ms
+00000000:AF:00.0, 31606, 31893 MiB, 11 %, 6 %, 25657 ms
+00000000:AF:00.0, 32006, 31893 MiB, 69 %, 45 %, 5740272 ms
+00000000:AF:00.0, 8824, 31845 MiB, 1 %, 0 %, 48168 ms
+00000000:AF:00.0, 9380, 31893 MiB, 79 %, 51 %, 16968455 ms
+00000000:AF:00.0, 32028, 431 MiB, 54 %, 5 %, 84683203 ms
+00000000:AF:00.0, 20661, 431 MiB, 54 %, 5 %, 84683568 ms
+00000000:AF:00.0, 10426, 431 MiB, 54 %, 5 %, 84683645 ms
+00000000:AF:00.0, 21688, 387 MiB, 25 %, 1 %, 170524 ms
+00000000:AF:00.0, 22495, 18587 MiB, 9 %, 6 %, 50740 ms
+00000000:AF:00.0, 22899, 18591 MiB, 33 %, 23 %, 86396945 ms
+00000000:AF:00.0, 28838, 331 MiB, 21 %, 1 %, 1031349 ms
+00000000:AF:00.0, 11710, 333 MiB, 47 %, 1 %, 753931 ms
+00000000:AF:00.0, 15236, 333 MiB, 35 %, 1 %, 811116 ms
+00000000:AF:00.0, 17348, 333 MiB, 47 %, 1 %, 698040 ms
+00000000:AF:00.0, 20408, 333 MiB, 44 %, 1 %, 820255 ms
+00000000:AF:00.0, 24104, 333 MiB, 34 %, 1 %, 886694 ms
+00000000:AF:00.0, 27505, 333 MiB, 53 %, 1 %, 667002 ms
+00000000:AF:00.0, 29012, 333 MiB, 48 %, 1 %, 749241 ms
+00000000:AF:00.0, 543, 13747 MiB, 41 %, 27 %, 86420419 ms
+00000000:AF:00.0, 31434, 429 MiB, 54 %, 5 %, 84683446 ms
+00000000:AF:00.0, 22961, 333 MiB, 30 %, 1 %, 262833 ms
+00000000:AF:00.0, 25395, 5311 MiB, 95 %, 1 %, 43550070 ms
+00000000:AF:00.0, 750, 1481 MiB, 99 %, 1 %, 3197562 ms
+00000000:AF:00.0, 24439, 387 MiB, 23 %, 1 %, 1628637 ms
+00000000:AF:00.0, 28235, 31853 MiB, 68 %, 7 %, 2540662 ms
+00000000:AF:00.0, 1169, 31853 MiB, 68 %, 7 %, 2607693 ms
+00000000:AF:00.0, 12353, 12935 MiB, 32 %, 21 %, 77315762 ms
+00000000:AF:00.0, 32180, 31099 MiB, 98 %, 21 %, 28274813 ms
+00000000:AF:00.0, 4116, 9159 MiB, 35 %, 9 %, 1194017 ms
+00000000:AF:00.0, 6490, 9159 MiB, 68 %, 18 %, 626005 ms
+00000000:AF:00.0, 7922, 9223 MiB, 63 %, 12 %, 3745040 ms
+00000000:AF:00.0, 14830, 31099 MiB, 95 %, 17 %, 20758660 ms
+00000000:AF:00.0, 15934, 5193 MiB, 10 %, 2 %, 1128683 ms
+00000000:AF:00.0, 18162, 9255 MiB, 23 %, 3 %, 1401994 ms
+00000000:AF:00.0, 20843, 4039 MiB, 20 %, 2 %, 981500 ms
+00000000:AF:00.0, 22751, 5063 MiB, 38 %, 7 %, 263340 ms
+00000000:AF:00.0, 23554, 17479 MiB, 20 %, 2 %, 918792 ms
+00000000:AF:00.0, 25465, 9159 MiB, 49 %, 7 %, 387102 ms
+00000000:AF:00.0, 26443, 31099 MiB, 90 %, 14 %, 13413308 ms
+00000000:AF:00.0, 15926, 9191 MiB, 66 %, 8 %, 441126 ms
+00000000:AF:00.0, 17004, 9223 MiB, 63 %, 8 %, 439816 ms
+00000000:AF:00.0, 18103, 5063 MiB, 44 %, 9 %, 315618 ms
+00000000:AF:00.0, 19030, 17351 MiB, 71 %, 11 %, 559637 ms
+00000000:AF:00.0, 20303, 17353 MiB, 71 %, 13 %, 746161 ms
+00000000:AF:00.0, 21858, 9287 MiB, 56 %, 8 %, 447682 ms
+00000000:AF:00.0, 22917, 9223 MiB, 68 %, 10 %, 441472 ms
+00000000:AF:00.0, 24060, 9161 MiB, 37 %, 9 %, 379501 ms
+00000000:AF:00.0, 25067, 17351 MiB, 80 %, 13 %, 747299 ms
+00000000:AF:00.0, 26713, 9161 MiB, 7 %, 0 %, 733901 ms
+00000000:AF:00.0, 29217, 18589 MiB, 37 %, 26 %, 86385188 ms
+00000000:AF:00.0, 29956, 9287 MiB, 48 %, 9 %, 292198 ms
+00000000:AF:00.0, 31681, 5063 MiB, 70 %, 17 %, 873538 ms
+00000000:AF:00.0, 2357, 5063 MiB, 76 %, 10 %, 570883 ms
+00000000:AF:00.0, 4825, 3079 MiB, 39 %, 5 %, 273514 ms
+00000000:AF:00.0, 5939, 9159 MiB, 92 %, 16 %, 3568602 ms
+00000000:AF:00.0, 13979, 3015 MiB, 52 %, 7 %, 345242 ms
+00000000:AF:00.0, 15311, 1283 MiB, 1 %, 0 %, 7769 ms
+Power limit for GPU 00000000:AF:00.0 was set to 250.00 W from 250.00 W.
+All done.
+Applications clocks set to "(MEM 877, SM 1380)" for GPU 00000000:AF:00.0
+All done.
+Persistence mode is already Enabled for GPU 00000000:AF:00.0.
+All done.
+=== Quota statistics
+    Path              Used     SoftQ    HardQ    Gracetime  Filec    FileQ    FiHaQ    FileGrace    
+    /home/vault          0.0K   524.3G  1048.6G        N/A       1      200K     400K        N/A    
+    /home/woody        468.5M   333.0G   499.5G        N/A     162                           N/A    
+    /home/hpc           12.9G    52.4G   104.9G        N/A     156K     500K   1,000K        N/A    
+======================
+End of epilogue.

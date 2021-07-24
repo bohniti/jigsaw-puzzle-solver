@@ -30,10 +30,16 @@ def main(config_file_name):
                                   drop_last=True)
     val_dataloader = DataLoader(dataset2, batch_size=config['batch_size'], num_workers=config['num_workers'])
 
-    model = SiameseNetwork(batch_size=config['batch_size'])
+    model = SiameseNetwork(batch_size=config['batch_size'], learning_rate=config['learning_rate'],
+                           margin=config['margin'])
 
     tb_logger = pl_loggers.TensorBoardLogger(
         save_dir=config['save_dir'])
+
+    tb_logger.log_hyperparams({'min_epohcs': config['min_epochs'], 'max_epochs': config['max_epochs'],
+                               'learning_rate': config['learning_rate'], 'batch_size': config['batch_size'],
+                               'margin': config['margin']})
+
     trainer = pl.Trainer(min_epochs=config['min_epochs'], max_epochs=config['max_epochs'], logger=tb_logger,
                          gpus=config['gpus'], default_root_dir=config['default_root_dir'],
                          progress_bar_refresh_rate=config['progress_bar_refresh_rate'])

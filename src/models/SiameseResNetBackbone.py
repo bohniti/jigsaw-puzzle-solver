@@ -6,12 +6,13 @@ import torchvision.models as models
 
 class SiameseNetwork(pl.LightningModule):
 
-    def __init__(self, batch_size):
+    def __init__(self, batch_size, learning_rate, margin):
         # Inherit from base class
         super().__init__()
 
-        self.margin = 0.9
+        self.margin = margin
         self.batch_size = batch_size
+        self.learning_rate = learning_rate
         print(batch_size)
 
         self.criterion = nn.BCEWithLogitsLoss()
@@ -53,8 +54,8 @@ class SiameseNetwork(pl.LightningModule):
         loss = self.criterion(output, y)
         acc = self.binary_acc(output, y)
 
-        self.log('train_loss', loss, prog_bar=True, logger=True)
-        self.log('train_acc', acc, prog_bar=True, logger=True)
+        self.log('train_loss', loss, prog_bar=True, logger=True, on_step=False, on_epoch=True)
+        self.log('train_acc', acc, prog_bar=True, logger=True, on_step=False, on_epoch=True)
 
         return {"loss": loss, "accuracy": acc}
 
@@ -64,25 +65,29 @@ class SiameseNetwork(pl.LightningModule):
         loss = self.criterion(output, y)
         acc = self.binary_acc(output, y)
 
-        self.log('val_acc', acc, prog_bar=True, logger=True)
-        self.log('val_loss', loss, prog_bar=True, logger=True)
+        self.log('val_acc', acc, prog_bar=False, logger=True, on_step=False, on_epoch=True)
+        self.log('val_loss', loss, prog_bar=True, logger=True, on_step=False, on_epoch=True)
+
         return {"val_loss": loss, "val_accuracy": acc}
+
 
     def validation_epoch_end(self, outputs):
         avg_loss = torch.stack([x["val_loss"] for x in outputs]).mean()
         avg_acc = torch.stack([x["val_accuracy"] for x in outputs]).mean()
-        self.log("avg_val_loss", avg_loss)
-        self.log("avg_val_accuracy", avg_acc)
+        self.log("avg_val_loss", avg_loss,  logger=True,on_step=False, on_epoch=True)
+        self.log("avg_val_accuracy", avg_acc,  logger=True,on_step=False, on_epoch=True)
 
     def training_epoch_end(self, outputs):
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean()
         avg_acc = torch.stack([x["accuracy"] for x in outputs]).mean()
-        self.log("avg_train_loss", avg_loss)
-        self.log("avg_train_accuracy", avg_acc)
+        self.log("avg_train_loss", avg_loss, logger=True, on_step=False, on_epoch=True)
+        self.log("avg_train_accuracy", avg_acc,  logger=True,on_step=False, on_epoch=True)
+
+
 
     def test_step(self, batch, batch_idx):
         return self.validation_step(batch, batch_idx)
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
         return optimizer
