@@ -35,7 +35,8 @@ def main(config_file_name):
     tb_logger = pl_loggers.TensorBoardLogger(
         save_dir=config['save_dir'])
     trainer = pl.Trainer(min_epochs=config['min_epochs'], max_epochs=config['max_epochs'], logger=tb_logger,
-                         gpus=config['gpus'], default_root_dir=config['default_root_dir'])
+                         gpus=config['gpus'], default_root_dir=config['default_root_dir'],
+                         progress_bar_refresh_rate=config['progress_bar_refresh_rate'])
     trainer.fit(model, train_dataloader, val_dataloader)
 
 

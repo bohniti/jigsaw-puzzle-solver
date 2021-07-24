@@ -9,3 +9,4 @@ val_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prep
 raw_img_path = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver'
 min_epochs = 1
 max_epochs = 30
+progress_bar_refresh_rate=0

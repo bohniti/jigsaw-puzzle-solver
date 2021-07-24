@@ -9,3 +9,4 @@ val_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/
 raw_img_path = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver'
 min_epochs = 1
 max_epochs = 30
+progress_bar_refresh_rate=1
