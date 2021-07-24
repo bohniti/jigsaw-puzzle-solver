@@ -1,0 +1,10 @@
+center_crop = 16
+gpus = 0
+batch_size = 16
+num_workers = 6
+save_dir = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/logs/'
+train_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_train.csv'
+val_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_val.csv'
+raw_img_path = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver'
+min_epochs = 1
+max_epochs = 30
