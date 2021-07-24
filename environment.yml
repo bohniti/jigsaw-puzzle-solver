@@ -9,7 +9,7 @@ channels:
 
 dependencies:
     - python=3.8
-    - tensorbaordx
+    - tensorbaord
     - ipykernel
     - numpy
     - pip
@@ -20,6 +20,3 @@ dependencies:
     - pytorch-lightning
     - optuna
     - toml
-    - pip:
-        - ray
-        - mlflow

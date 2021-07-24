@@ -1,7 +1,9 @@
 Jigsaw Puzzle Solver
 ==============================
 
-The repository contains code which solves a jigsaw puzzle . 
+This project aims to solve a jigsaw puzzle of historical fragments with  
+
+
 
 Project Organization
 ------------
