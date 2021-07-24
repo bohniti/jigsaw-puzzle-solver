@@ -5,9 +5,6 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torchvision.models as models
-from SiameseNetworkDataset import SiameseNetworkDataset
-from torch.utils.data import DataLoader
-from torchvision import transforms
 
 
 # TODO Change pytorch version because of non support for autologging
@@ -18,18 +15,20 @@ from torchvision import transforms
 
 class SiameseNetwork(pl.LightningModule):
 
-    def __init__(self):
+    def __init__(self, batch_size):
         # Inherit from base class
         super().__init__()
 
         self.margin = 0.9
+        self.batch_size = batch_size
+        print(batch_size)
 
         self.criterion = nn.BCEWithLogitsLoss()
 
         self.cnn1 = models.resnet50(pretrained=False)
 
         self.fc1 = nn.Sequential(
-            nn.Linear(8000, 500),
+            nn.Linear(8 * 1000, 500),
             nn.ReLU(inplace=True),
 
             nn.Linear(500, 500),

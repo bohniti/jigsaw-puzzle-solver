@@ -10,5 +10,5 @@ raw_img_path = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver'
 min_epochs = 1
 max_epochs = 30
 
-
+git
 
