@@ -14,6 +14,7 @@ from torchvision.datasets import KMNIST
 # TODO Refactors such that everything is in sperate Files
 # TODO Implement MLFlow Logger for Parameters
 # TODO Implement MLFlow credential in config
+
 class LightningMNISTClassifier(pl.LightningModule):
 
     def __init__(self, hyperparameters, data_dir=None):

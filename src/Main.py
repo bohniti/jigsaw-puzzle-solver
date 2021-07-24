@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 
 from SiameseNetworkDataset import SiameseNetworkDataset
-from models.SiameseNetwork_V1 import SiameseNetwork
+from models.SiameseResNetBackbone import SiameseNetwork
 from utils.utils import load_config
 
 
