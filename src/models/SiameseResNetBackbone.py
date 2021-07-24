@@ -6,7 +6,7 @@ import torchvision.models as models
 
 class SiameseNetwork(pl.LightningModule):
 
-    def __init__(self, batch_size, learning_rate, margin):
+    def __init__(self, batch_size, learning_rate, margin, partial_conf):
         # Inherit from base class
         super().__init__()
 
@@ -17,7 +17,11 @@ class SiameseNetwork(pl.LightningModule):
 
         self.criterion = nn.BCEWithLogitsLoss()
 
-        self.cnn1 = models.resnet50(pretrained=False)
+        if partial_conf == 0:
+            self.cnn1 = models.resnet50(pretrained=False)
+        else:
+            self.cnn1 = pdresnet50(pretrained=False)
+
 
         self.fc1 = nn.Sequential(
             nn.Linear(8 * 1000, 500),
