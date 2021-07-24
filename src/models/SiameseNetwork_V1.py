@@ -1,16 +1,7 @@
-# TODO Change os to pathlib because of windows, linux usbability
-# TODO Change this model with the copy such that is naming correct!
-
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torchvision.models as models
-
-
-# TODO Change pytorch version because of non support for autologging
-# TODO Refactors such that everything is in sperate Files
-# TODO Implement MLFlow Logger for Parameters
-# TODO Implement MLFlow credential in config
 
 
 class SiameseNetwork(pl.LightningModule):
