@@ -12,4 +12,4 @@ max_epochs = 2
 progress_bar_refresh_rate=0.5
 learning_rate = 0.001
 margin = 0.9
-partial_conf=1
+partial_conf=0
