@@ -2,7 +2,7 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torchvision.models as models
-#from src.models.ResNet50 import pdresnet50
+from ResNet50 import pdresnet50
 
 
 class SiameseNetwork(pl.LightningModule):
@@ -59,8 +59,8 @@ class SiameseNetwork(pl.LightningModule):
         loss = self.criterion(output, y)
         acc = self.binary_acc(output, y)
 
-        self.log('train_loss', loss, prog_bar=True, logger=True, on_step=False, on_epoch=True)
-        self.log('train_acc', acc, prog_bar=True, logger=True, on_step=False, on_epoch=True)
+        self.log('train_loss', loss, prog_bar=False, logger=True, on_step=False, on_epoch=True)
+        self.log('train_acc', acc, prog_bar=False, logger=True, on_step=False, on_epoch=True)
 
         return {"loss": loss, "accuracy": acc}
 
@@ -71,7 +71,7 @@ class SiameseNetwork(pl.LightningModule):
         acc = self.binary_acc(output, y)
 
         self.log('val_acc', acc, prog_bar=False, logger=True, on_step=False, on_epoch=True)
-        self.log('val_loss', loss, prog_bar=True, logger=True, on_step=False, on_epoch=True)
+        self.log('val_loss', loss, prog_bar=False, logger=True, on_step=False, on_epoch=True)
 
         return {"val_loss": loss, "val_accuracy": acc}
 
@@ -79,14 +79,14 @@ class SiameseNetwork(pl.LightningModule):
     def validation_epoch_end(self, outputs):
         avg_loss = torch.stack([x["val_loss"] for x in outputs]).mean()
         avg_acc = torch.stack([x["val_accuracy"] for x in outputs]).mean()
-        self.log("avg_val_loss", avg_loss,  logger=True,on_step=False, on_epoch=True)
-        self.log("avg_val_accuracy", avg_acc,  logger=True,on_step=False, on_epoch=True)
+        self.log("avg_val_loss", avg_loss,  prog_bar=False, logger=True,on_step=False, on_epoch=True)
+        self.log("avg_val_accuracy", avg_acc,  prog_bar=False, logger=True,on_step=False, on_epoch=True)
 
     def training_epoch_end(self, outputs):
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean()
         avg_acc = torch.stack([x["accuracy"] for x in outputs]).mean()
-        self.log("avg_train_loss", avg_loss, logger=True, on_step=False, on_epoch=True)
-        self.log("avg_train_accuracy", avg_acc,  logger=True,on_step=False, on_epoch=True)
+        self.log("avg_train_loss", avg_loss, prog_bar=False, logger=True, on_step=False, on_epoch=True)
+        self.log("avg_train_accuracy", avg_acc,  prog_bar=False, logger=True,on_step=False, on_epoch=True)
 
 
 

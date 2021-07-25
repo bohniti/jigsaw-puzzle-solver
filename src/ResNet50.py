@@ -97,8 +97,8 @@ class PDResNet(nn.Module):
     def __init__(self, block, layers, num_classes=1000):
         self.inplanes = 64
         super(PDResNet, self).__init__()
-        self.conv1 = PartialConv2d(3, 64, kernel_size=7, stride=2, padding=3,
-                                   bias=False)
+        self.conv1 = PartialConv2d(3, 64, kernel_size=7, stride=1, padding=0,
+                                   bias=False, multi_channel=True)
 
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)
@@ -138,6 +138,7 @@ class PDResNet(nn.Module):
         mask = x.clone()
         # TODO parameterize the threshold or change it if needed
         mask[mask != 0] = 1
+
         x = self.conv1(input=x, mask_in=mask)
         x = self.bn1(x)
         x = self.relu(x)

@@ -14,7 +14,7 @@ def main(config_file_name):
     config = load_config(config_file_name, show=True, tune_config=False)
     transform = transforms.Compose([
         transforms.CenterCrop(config['center_crop']),
-        # transforms.Grayscale(num_output_channels=1),
+        #transforms.Grayscale(num_output_channels=1),
         transforms.ToTensor()
     ])
 
