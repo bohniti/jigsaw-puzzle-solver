@@ -1,5 +1,4 @@
 from sys import platform
-
 import pytorch_lightning as pl
 from pytorch_lightning import loggers as pl_loggers
 from torch.utils.data import DataLoader
@@ -14,7 +13,7 @@ def main(config_file_name):
     config = load_config(config_file_name, show=True, tune_config=False)
     transform = transforms.Compose([
         transforms.CenterCrop(config['center_crop']),
-        #transforms.Grayscale(num_output_channels=1),
+        # transforms.Grayscale(num_output_channels=1),
         transforms.ToTensor()
     ])
 
@@ -31,7 +30,8 @@ def main(config_file_name):
     val_dataloader = DataLoader(dataset2, batch_size=config['batch_size'], num_workers=config['num_workers'])
 
     model = SiameseNetwork(batch_size=config['batch_size'], learning_rate=config['learning_rate'],
-                           margin=config['margin'], partial_conf=config['partial_conf'])
+                           margin=config['margin'], partial_conf=config['partial_conf'],
+                           center_conf=config['center_crop'])
 
     tb_logger = pl_loggers.TensorBoardLogger(
         save_dir=config['save_dir'])

@@ -8,7 +8,7 @@ import numpy as np
 
 class SiameseNetwork(pl.LightningModule):
 
-    def __init__(self, batch_size, learning_rate, margin, partial_conf):
+    def __init__(self, batch_size, learning_rate, margin, partial_conf, center_crop):
         # Inherit from base class
         super().__init__()
 
@@ -17,6 +17,7 @@ class SiameseNetwork(pl.LightningModule):
         self.learning_rate = learning_rate
         self.partial_conf = partial_conf
         self.reference_image = None
+        self.center_crop = center_crop
         print(batch_size)
 
         self.criterion = nn.BCEWithLogitsLoss()
@@ -122,8 +123,8 @@ class SiameseNetwork(pl.LightningModule):
     def training_epoch_end(self, outputs):
 
         if (self.current_epoch == 1):
-            cover_img = torch.rand((self.batch_size, 3, 64, 64))
-            cover_img2 = torch.rand((self.batch_size, 3, 64, 64))
+            cover_img = torch.rand((self.batch_size, 3, self.center_crop, self.center_crop))
+            cover_img2 = torch.rand((self.batch_size, 3, self.center_crop, self.center_crop))
             self.logger.experiment.add_graph(
                 SiameseNetwork(self.batch_size, self.learning_rate, self.margin, self.partial_conf),
                 [cover_img, cover_img2])
