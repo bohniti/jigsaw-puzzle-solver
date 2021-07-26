@@ -22,6 +22,7 @@ class SiameseNetworkDataset(Dataset):
         img_0 = Image.open(self.raw_img_path + sample['0'] + '.jpg')
         img_1 = Image.open(self.raw_img_path + sample['1'] + '.jpg')
 
+
         y = torch.from_numpy(np.array(sample.y, dtype=np.float32))
 
         if self.transform:
