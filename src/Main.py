@@ -31,7 +31,7 @@ def main(config_file_name):
 
     model = SiameseNetwork(batch_size=config['batch_size'], learning_rate=config['learning_rate'],
                            margin=config['margin'], partial_conf=config['partial_conf'],
-                           center_conf=config['center_crop'])
+                           center_crop=config['center_crop'])
 
     tb_logger = pl_loggers.TensorBoardLogger(
         save_dir=config['save_dir'])
