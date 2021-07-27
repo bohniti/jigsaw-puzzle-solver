@@ -1,5 +1,4 @@
 name: conda-env
-prefix: /Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env
 channels:
     - conda-forge
 dependencies:

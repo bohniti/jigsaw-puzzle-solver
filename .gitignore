@@ -6,3 +6,4 @@ puzzle_solver/models/__pycache__/*
 *.pyo
 /results/
 /.ipynb_checkpoints/
+/conda-env/
