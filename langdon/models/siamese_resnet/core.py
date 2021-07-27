@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 import torchvision.models as models
 
-from puzzle_solver.layers.core import PartialConv2d
+from langdon.layers.core import PartialConv2d
 
 __all__ = ['PDResNet', 'pdresnet18', 'pdresnet34', 'pdresnet50', 'pdresnet101',
            'pdresnet152']

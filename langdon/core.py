@@ -3,9 +3,9 @@ from pytorch_lightning import loggers as pl_loggers
 import torch.utils.data
 from torchvision import transforms
 
-from puzzle_solver.features.core import SiameseDataset
-from puzzle_solver.models.siamese_resnet.core import SiameseNetwork
-from puzzle_solver.utils.core import load_config, get_config_path
+from langdon.features.core import SiameseDataset
+from langdon.models.siamese_resnet.core import SiameseNetwork
+from langdon.utils.core import load_config, get_config_path
 
 
 def init_step():

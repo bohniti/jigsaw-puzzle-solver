@@ -1,4 +1,4 @@
-from puzzle_solver.core import init_step, load_step, log_step, train_step
+from langdon.core import init_step, load_step, log_step, train_step
 
 
 def main():
