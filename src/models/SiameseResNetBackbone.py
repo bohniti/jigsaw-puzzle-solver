@@ -126,7 +126,7 @@ class SiameseNetwork(pl.LightningModule):
             cover_img = torch.rand((self.batch_size, 3, self.center_crop, self.center_crop))
             cover_img2 = torch.rand((self.batch_size, 3, self.center_crop, self.center_crop))
             self.logger.experiment.add_graph(
-                SiameseNetwork(self.batch_size, self.learning_rate, self.margin, self.partial_conf),
+                SiameseNetwork(self.batch_size, self.learning_rate, self.margin, self.partial_conf, self.center_crop),
                 [cover_img, cover_img2])
 
         self.custom_histogram_adder()
