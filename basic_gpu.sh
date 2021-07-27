@@ -34,4 +34,4 @@ cd /home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/
 source env/bin/activate
 
 # start the script main.py
-python3 ./src/Main.py
+python3 ./main.py

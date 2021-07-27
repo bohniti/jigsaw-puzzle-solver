@@ -1,4 +1,4 @@
-center_crop = 512
+center_crop = 16
 gpus = 0
 batch_size = 8
 num_workers = 6

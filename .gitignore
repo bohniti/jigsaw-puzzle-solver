@@ -1,7 +1,7 @@
 data
 data/KMNIST/
-src/__pycache__/*
-src/models/__pycache__/*
+puzzle_solver/__pycache__/*
+puzzle_solver/models/__pycache__/*
 *.pyc
 *.pyo
 /results/
