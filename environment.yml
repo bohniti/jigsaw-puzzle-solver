@@ -11,4 +11,5 @@ dependencies:
     - optuna
     - toml
     - pandas
+    - matplotlib
 
