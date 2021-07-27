@@ -1,19 +1,14 @@
-name:
-    PuzzleSolver
-
+name: conda-env
+prefix: /Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env
 channels:
     - conda-forge
-
 dependencies:
-    - python=3.8
-    - tensorbaord
-    - ipykernel
-    - numpy
-    - pip
-    - scikit-learn
-    - opencv
-    - matplotlib
-    - torchvision
+    - python
     - pytorch-lightning
+    - torchvision
+    - opencv
+    - jupyterlab
+    - ipykernel
     - optuna
     - toml
+

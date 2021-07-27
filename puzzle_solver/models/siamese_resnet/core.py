@@ -1,16 +1,28 @@
+import matplotlib.pyplot as plt
+import numpy as np
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
-import torchvision.models as models
-import matplotlib.pyplot as plt
-import numpy as np
 import torch.utils.model_zoo as model_zoo
+import torchvision.models as models
+
+from puzzle_solver.layers.core import PartialConv2d
+
+__all__ = ['PDResNet', 'pdresnet18', 'pdresnet34', 'pdresnet50', 'pdresnet101',
+           'pdresnet152']
+
+model_urls = {
+    'pdresnet18': '',
+    'pdresnet34': '',
+    'pdresnet50': '',
+    'pdresnet101': '',
+    'pdresnet152': '',
+}
 
 
 class SiameseNetwork(pl.LightningModule):
 
     def __init__(self, batch_size, learning_rate, margin, partial_conf, center_crop):
-        # Inherit from base class
         super().__init__()
 
         self.margin = margin
@@ -131,7 +143,7 @@ class SiameseNetwork(pl.LightningModule):
                 [cover_img, cover_img2])
 
         self.custom_histogram_adder()
-        #self.show_activatioons(self.reference_image)
+        # self.show_activatioons(self.reference_image)
 
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean()
         avg_acc = torch.stack([x["accuracy"] for x in outputs]).mean()
@@ -143,193 +155,187 @@ class SiameseNetwork(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
         return optimizer
 
-    from puzzle_solver.layers.PartialConv2d import PartialConv2d
 
-    __all__ = ['PDResNet', 'pdresnet18', 'pdresnet34', 'pdresnet50', 'pdresnet101',
-               'pdresnet152']
+def conv3x3(in_planes, out_planes, stride=1):
+    """3x3 convolution with padding"""
+    return PartialConv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+                         padding=1, bias=False)
 
-    model_urls = {
-        'pdresnet18': '',
-        'pdresnet34': '',
-        'pdresnet50': '',
-        'pdresnet101': '',
-        'pdresnet152': '',
-    }
 
-    def conv3x3(in_planes, out_planes, stride=1):
-        """3x3 convolution with padding"""
-        return PartialConv2d(in_planes, out_planes, kernel_size=3, stride=stride,
-                             padding=1, bias=False)
+class BasicBlock(nn.Module):
+    expansion = 1
 
-    class BasicBlock(nn.Module):
-        expansion = 1
+    def __init__(self, inplanes, planes, stride=1, downsample=None):
+        super(BasicBlock, self).__init__()
+        self.conv1 = conv3x3(inplanes, planes, stride)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.relu = nn.ReLU(inplace=True)
+        self.conv2 = conv3x3(planes, planes)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.downsample = downsample
+        self.stride = stride
 
-        def __init__(self, inplanes, planes, stride=1, downsample=None):
-            super(BasicBlock, self).__init__()
-            self.conv1 = conv3x3(inplanes, planes, stride)
-            self.bn1 = nn.BatchNorm2d(planes)
-            self.relu = nn.ReLU(inplace=True)
-            self.conv2 = conv3x3(planes, planes)
-            self.bn2 = nn.BatchNorm2d(planes)
-            self.downsample = downsample
-            self.stride = stride
+    def forward(self, x):
+        residual = x
 
-        def forward(self, x):
-            residual = x
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
 
-            out = self.conv1(x)
-            out = self.bn1(out)
-            out = self.relu(out)
+        out = self.conv2(out)
+        out = self.bn2(out)
 
-            out = self.conv2(out)
-            out = self.bn2(out)
+        if self.downsample is not None:
+            residual = self.downsample(x)
 
-            if self.downsample is not None:
-                residual = self.downsample(x)
+        out += residual
+        out = self.relu(out)
 
-            out += residual
-            out = self.relu(out)
+        return out
 
-            return out
 
-    class Bottleneck(nn.Module):
-        expansion = 4
+class Bottleneck(nn.Module):
+    expansion = 4
 
-        def __init__(self, inplanes, planes, stride=1, downsample=None):
-            super(Bottleneck, self).__init__()
-            self.conv1 = PartialConv2d(inplanes, planes, kernel_size=1, bias=False)
-            self.bn1 = nn.BatchNorm2d(planes)
-            self.conv2 = PartialConv2d(planes, planes, kernel_size=3, stride=stride,
-                                       padding=1, bias=False)
-            self.bn2 = nn.BatchNorm2d(planes)
-            self.conv3 = PartialConv2d(planes, planes * self.expansion, kernel_size=1, bias=False)
-            self.bn3 = nn.BatchNorm2d(planes * self.expansion)
-            self.relu = nn.ReLU(inplace=True)
-            self.downsample = downsample
-            self.stride = stride
+    def __init__(self, inplanes, planes, stride=1, downsample=None):
+        super(Bottleneck, self).__init__()
+        self.conv1 = PartialConv2d(inplanes, planes, kernel_size=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.conv2 = PartialConv2d(planes, planes, kernel_size=3, stride=stride,
+                                   padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.conv3 = PartialConv2d(planes, planes * self.expansion, kernel_size=1, bias=False)
+        self.bn3 = nn.BatchNorm2d(planes * self.expansion)
+        self.relu = nn.ReLU(inplace=True)
+        self.downsample = downsample
+        self.stride = stride
 
-        def forward(self, x):
-            residual = x
+    def forward(self, x):
+        residual = x
 
-            out = self.conv1(x)
-            out = self.bn1(out)
-            out = self.relu(out)
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
 
-            out = self.conv2(out)
-            out = self.bn2(out)
-            out = self.relu(out)
+        out = self.conv2(out)
+        out = self.bn2(out)
+        out = self.relu(out)
 
-            out = self.conv3(out)
-            out = self.bn3(out)
+        out = self.conv3(out)
+        out = self.bn3(out)
 
-            if self.downsample is not None:
-                residual = self.downsample(x)
+        if self.downsample is not None:
+            residual = self.downsample(x)
 
-            out += residual
-            out = self.relu(out)
+        out += residual
+        out = self.relu(out)
 
-            return out
+        return out
 
-    class PDResNet(nn.Module):
 
-        def __init__(self, block, layers, num_classes=1000):
-            self.inplanes = 64
-            super(PDResNet, self).__init__()
-            self.conv1 = PartialConv2d(3, 64, kernel_size=7, stride=1, padding=0,
-                                       bias=False, multi_channel=True)
+class PDResNet(nn.Module):
 
-            self.bn1 = nn.BatchNorm2d(64)
-            self.relu = nn.ReLU(inplace=True)
-            self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-            self.layer1 = self._make_layer(block, 64, layers[0])
-            self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
-            self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
-            self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
-            self.avgpool = nn.AvgPool2d(7, stride=1)
-            self.fc = nn.Linear(512 * block.expansion, num_classes)
+    def __init__(self, block, layers, num_classes=1):
+        self.inplanes = 64
+        super(PDResNet, self).__init__()
+        self.conv1 = PartialConv2d(3, 64, kernel_size=7, stride=1, padding=1,
+                                   bias=False, multi_channel=True)
 
-            for m in self.modules():
-                if isinstance(m, PartialConv2d):
-                    nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-                elif isinstance(m, nn.BatchNorm2d):
-                    nn.init.constant_(m.weight, 1)
-                    nn.init.constant_(m.bias, 0)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
+        self.avgpool = nn.AvgPool2d(7, stride=1)
+        self.fc = nn.Linear(512 * block.expansion, num_classes)
 
-        def _make_layer(self, block, planes, blocks, stride=1):
-            downsample = None
-            if stride != 1 or self.inplanes != planes * block.expansion:
-                downsample = nn.Sequential(
-                    PartialConv2d(self.inplanes, planes * block.expansion,
-                                  kernel_size=1, stride=stride, bias=False),
-                    nn.BatchNorm2d(planes * block.expansion),
-                )
+        for m in self.modules():
+            if isinstance(m, PartialConv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+            elif isinstance(m, nn.BatchNorm2d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
 
-            layers = []
-            layers.append(block(self.inplanes, planes, stride, downsample))
-            self.inplanes = planes * block.expansion
-            for i in range(1, blocks):
-                layers.append(block(self.inplanes, planes))
+    def _make_layer(self, block, planes, blocks, stride=1):
+        downsample = None
+        if stride != 1 or self.inplanes != planes * block.expansion:
+            downsample = nn.Sequential(
+                PartialConv2d(self.inplanes, planes * block.expansion,
+                              kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
 
-            return nn.Sequential(*layers)
+        layers = []
+        layers.append(block(self.inplanes, planes, stride, downsample))
+        self.inplanes = planes * block.expansion
+        for i in range(1, blocks):
+            layers.append(block(self.inplanes, planes))
 
-        def forward(self, x):
-            mask = x.clone()
-            # TODO parameterize the threshold or change it if needed
-            mask[mask != 0] = 1
+        return nn.Sequential(*layers)
 
-            x = self.conv1(input=x, mask_in=mask)
-            x = self.bn1(x)
-            x = self.relu(x)
-            x = self.maxpool(x)
+    def forward(self, x):
+        mask = x.clone()
+        # TODO parameterize the threshold or change it if needed
+        mask[mask != 0] = 1
 
-            x = self.layer1(x)
-            x = self.layer2(x)
-            x = self.layer3(x)
-            x = self.layer4(x)
+        x = self.conv1(input=x, mask_in=mask)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
 
-            x = self.avgpool(x)
-            x = x.view(x.size(0), -1)
-            x = self.fc(x)
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
 
-            return x
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
 
-    def pdresnet18(pretrained=False, **kwargs):
-        """Constructs a PDResNet-18 model.
-        Args:
-            pretrained (bool): If True, returns a model pre-trained on ImageNet
-        """
-        model = PDResNet(BasicBlock, [2, 2, 2, 2], **kwargs)
-        if pretrained:
-            model.load_state_dict(model_zoo.load_url(model_urls['pdresnet18']))
-        return model
+        return x
 
-    def pdresnet50(pretrained=False, **kwargs):
-        """Constructs a PDResNet-50 model.
-        Args:
-            pretrained (bool): If True, returns a model pre-trained on ImageNet
-        """
-        model = PDResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
-        if pretrained:
-            model.load_state_dict(model_zoo.load_url(model_urls['pdresnet50']))
-        return model
 
-    def pdresnet101(pretrained=False, **kwargs):
-        """Constructs a PDResNet-101 model.
-        Args:
-            pretrained (bool): If True, returns a model pre-trained on ImageNet
-        """
-        model = PDResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
-        if pretrained:
-            model.load_state_dict(model_zoo.load_url(model_urls['pdresnet101']))
-        return model
+def pdresnet18(pretrained=False, **kwargs):
+    """Constructs a PDResNet-18 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = PDResNet(BasicBlock, [2, 2, 2, 2], **kwargs)
+    if pretrained:
+        model.load_state_dict(model_zoo.load_url(model_urls['pdresnet18']))
+    return model
 
-    def pdresnet152(pretrained=False, **kwargs):
-        """Constructs a PDResNet-152 model.
-        Args:
-            pretrained (bool): If True, returns a model pre-trained on ImageNet
-        """
-        model = PDResNet(Bottleneck, [3, 8, 36, 3], **kwargs)
-        if pretrained:
-            model.load_state_dict(model_zoo.load_url(model_urls['pdresnet152']))
-        return model
 
+def pdresnet50(pretrained=False, **kwargs):
+    """Constructs a PDResNet-50 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = PDResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
+    if pretrained:
+        model.load_state_dict(model_zoo.load_url(model_urls['pdresnet50']))
+    return model
+
+
+def pdresnet101(pretrained=False, **kwargs):
+    """Constructs a PDResNet-101 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = PDResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
+    if pretrained:
+        model.load_state_dict(model_zoo.load_url(model_urls['pdresnet101']))
+    return model
+
+
+def pdresnet152(pretrained=False, **kwargs):
+    """Constructs a PDResNet-152 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = PDResNet(Bottleneck, [3, 8, 36, 3], **kwargs)
+    if pretrained:
+        model.load_state_dict(model_zoo.load_url(model_urls['pdresnet152']))
+    return model
