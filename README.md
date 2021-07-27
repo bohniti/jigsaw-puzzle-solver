@@ -19,11 +19,15 @@ while studying computer science at [University of Erlangen Nuermberg](https://ww
 the [work](https://hal.archives-ouvertes.fr/hal-02367779/document) of [Pirrone](mailto:antoine.pirrone@labri.fr) et al.
 
 ### Get the data
-
+ Raw
 ```bash
-wget https://zenodo.org/record/3893807/files/hisfrag20_train.zip?download=1 &&
-wget https://zenodo.org/record/3893807/files/hisfrag20_test.zip?download=1`
+$wget https://zenodo.org/record/3893807/files/hisfrag20_train.zip?download=1 &&
+$wget https://zenodo.org/record/3893807/files/hisfrag20_test.zip?download=1`
 ```
+#### Prepared
+You will find them in the data directory as [csv-files](...) which points to the original files.<br>
+
+*Note: Preproceccing is will be performed **online**. The files just split the data and provides pairs for the siamiese approach.*
 
 ### Get the code
 
@@ -47,19 +51,19 @@ conda activate /Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env
 
 ### Run it on you own
 
-#### EDA and Preproceccing
+EDA and Preproceccing
 
 ```bash
 (/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env): $jupyter notebook ./notebooks/eda_preproceccing.ipynb
 ```
 
-#### Main
+Main
 
 ```bash
 (/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env): $python3 main.py
 ```
 
-#### Training configuration
+Training configuration
 
 ```bash
 (/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env): $vim ./config/config_local.toml
@@ -68,7 +72,7 @@ conda activate /Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env
 (/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env): $vim./config/config_local.toml
 ```
 
-#### Results
+Results
 
 ```bash
 (/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env): $tensorboard --logdir ./results/default/version_X
@@ -76,7 +80,7 @@ conda activate /Users/beantown/PycharmProjects/jigsaw-puzzle-solver/conda-env
 
 *Note: You can change directory in config files. So, you must change it in the tensorboard command as well.*
 
-#### Custom steps
+Custom steps
 
 ```python
 from langdon.core import some_steps
