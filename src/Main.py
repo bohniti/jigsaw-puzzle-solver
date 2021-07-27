@@ -1,4 +1,5 @@
 from sys import platform
+
 import pytorch_lightning as pl
 from pytorch_lightning import loggers as pl_loggers
 from torch.utils.data import DataLoader
@@ -27,7 +28,8 @@ def main(config_file_name):
 
     train_dataloader = DataLoader(dataset1, batch_size=config['batch_size'], num_workers=config['num_workers'],
                                   drop_last=True)
-    val_dataloader = DataLoader(dataset2, batch_size=config['batch_size'], num_workers=config['num_workers'])
+    val_dataloader = DataLoader(dataset2, batch_size=config['batch_size'], num_workers=config['num_workers'],
+                                drop_last=True)
 
     model = SiameseNetwork(batch_size=config['batch_size'], learning_rate=config['learning_rate'],
                            margin=config['margin'], partial_conf=config['partial_conf'],
