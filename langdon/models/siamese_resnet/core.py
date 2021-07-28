@@ -22,7 +22,7 @@ model_urls = {
 
 class SiameseNetwork(pl.LightningModule):
 
-    def __init__(self, batch_size, learning_rate, margin, partial_conf, center_crop):
+    def __init__(self, batch_size, learning_rate, margin, partial_conf, center_crop, linear_input):
         super().__init__()
 
         self.margin = margin
@@ -31,17 +31,20 @@ class SiameseNetwork(pl.LightningModule):
         self.partial_conf = partial_conf
         self.reference_image = None
         self.center_crop = center_crop
+        self.linear_input = linear_input
         print(batch_size)
 
         self.criterion = nn.BCEWithLogitsLoss()
 
         if self.partial_conf == 0:
             self.cnn1 = models.resnet50(pretrained=False)
+            self.input_size = 8 * 1000
         else:
-            self.cnn1 = pdresnet50(pretrained=False)
+            self.cnn1 = pdresnet50(pretrained=False, linear_input=self.linear_input, center_crop=self.center_crop)
+            self.input_size = 8
 
         self.fc1 = nn.Sequential(
-            nn.Linear(8 * 1000, 500),
+            nn.Linear(self.input_size, 500),
             nn.ReLU(inplace=True),
 
             nn.Linear(500, 500),
@@ -86,6 +89,21 @@ class SiameseNetwork(pl.LightningModule):
         # self.log('val_loss', loss, prog_bar=False, logger=True, on_step=False, on_epoch=True)
 
         return {"val_loss": loss, "val_accuracy": acc}
+
+
+    def test_step(self, batch, batch_idx):
+        x0, x1, y = batch
+        output = self(x0, x1)
+        loss = self.criterion(output, y)
+        acc = self.binary_acc(output, y)
+
+        # self.log('val_acc', acc, prog_bar=False, logger=True, on_step=False, on_epoch=True)
+        # self.log('val_loss', loss, prog_bar=False, logger=True, on_step=False, on_epoch=True)
+
+        self.logger.experiment.add_scalar("Loss/Test", loss)
+        self.logger.experiment.add_scalar("Accuracy/Test", acc)
+
+        return {"test_loss": loss, "test_accuracy": acc}
 
     def custom_histogram_adder(self):
 
@@ -133,17 +151,25 @@ class SiameseNetwork(pl.LightningModule):
         self.logger.experiment.add_scalar("Loss/Validation", avg_loss, self.current_epoch)
         self.logger.experiment.add_scalar("Accuracy/Validation", avg_acc, self.current_epoch)
 
+
+
     def training_epoch_end(self, outputs):
 
-        if (self.current_epoch == 1):
+        # Graph is still not showing every information
+        '''
+           if (self.current_epoch == 1):
             cover_img = torch.rand((self.batch_size, 3, self.center_crop, self.center_crop))
             cover_img2 = torch.rand((self.batch_size, 3, self.center_crop, self.center_crop))
             self.logger.experiment.add_graph(
                 SiameseNetwork(self.batch_size, self.learning_rate, self.margin, self.partial_conf, self.center_crop),
                 [cover_img, cover_img2])
+        '''
+
 
         self.custom_histogram_adder()
-        # self.show_activatioons(self.reference_image)
+
+        # Activation map is still not showing every information
+        #self.show_activatioons(self.reference_image)
 
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean()
         avg_acc = torch.stack([x["accuracy"] for x in outputs]).mean()
@@ -235,7 +261,9 @@ class Bottleneck(nn.Module):
 
 class PDResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=1):
+    def __init__(self, block, layers, linear_input, center_crop,num_classes=1):
+        self.linear_input = linear_input
+        self.center_crop = center_crop
         self.inplanes = 64
         super(PDResNet, self).__init__()
         self.conv1 = PartialConv2d(3, 64, kernel_size=7, stride=1, padding=1,
@@ -249,7 +277,8 @@ class PDResNet(nn.Module):
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
-        self.fc = nn.Linear(512 * block.expansion, num_classes)
+        self.fc = nn.Linear(self.linear_input, num_classes)
+
 
         for m in self.modules():
             if isinstance(m, PartialConv2d):
@@ -290,10 +319,12 @@ class PDResNet(nn.Module):
         x = self.layer3(x)
         x = self.layer4(x)
 
-        x = self.avgpool(x)
+        if self.center_crop >= 512:
+            print('yes')
+            x = self.avgpool(x)
+
         x = x.view(x.size(0), -1)
         x = self.fc(x)
-
         return x
 
 

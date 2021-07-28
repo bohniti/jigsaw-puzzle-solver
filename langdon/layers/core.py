@@ -5,7 +5,6 @@
 #
 # Author & Contact: Guilin Liu (guilinl@nvidia.com)
 ###############################################################################
-
 import torch
 import torch.nn.functional as F
 from torch import nn
@@ -63,7 +62,6 @@ class PartialConv2d(nn.Conv2d):
                 else:
                     mask = mask_in
 
-                mask.shape
                 self.update_mask = F.conv2d(mask, self.weight_maskUpdater, bias=None, stride=self.stride,
                                             padding=self.padding, dilation=self.dilation, groups=1)
 

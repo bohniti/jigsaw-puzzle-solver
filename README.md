@@ -12,10 +12,10 @@
 ### Intro
 
 [Langdon](https://en.wikipedia.org/wiki/Robert_Langdon), the most excellent puzzle solver of all time, is a jigsaw
-puzzle solver written in python, [pytorch](https://pytorch.org) and [lightning](https://www.pytorchlightning.ai). I developed the langdon
+puzzle solver written in python. Langdon uses [pytorch](https://pytorch.org)-[lightning](https://www.pytorchlightning.ai) and [partial convolution](https://arxiv.org/pdf/1811.11718.pdf). I developed langdon
 while studying computer science at [University of Erlangen Nuermberg](https://www.fau.eu).
 
->The **main contribution** is the proposal of a deep siamese network architecture, called Langdong , designed for historical fragment matching. It is inspiered by
+>The **main contribution** is the proposal of a [deep siamese](https://arxiv.org/pdf/1707.02131.pdf) [residual network architecture](https://arxiv.org/pdf/1512.03385.pdf) , called Langdong , designed for [historical fragment](https://lme.tf.fau.de/competitions/hisfragir20-icfhr-2020-competition-on-image-retrieval-for-historical-handwritten-fragments/) matching. It is inspiered by
 the [work](https://hal.archives-ouvertes.fr/hal-02367779/document) of [Pirrone](mailto:antoine.pirrone@labri.fr) et al.
 
 ### Get the data
@@ -25,7 +25,7 @@ $wget https://zenodo.org/record/3893807/files/hisfrag20_train.zip?download=1 &&
 $wget https://zenodo.org/record/3893807/files/hisfrag20_test.zip?download=1`
 ```
 #### Prepared
-You will find them in the data directory as [csv-files](...) which points to the original files.<br>
+You will find them in the data directory as [csv-files](https://github.com/bohniti/jigsaw-puzzle-solver/tree/master/data/hisfrag20/prepared/paris_as_csv) which points to the original files.<br>
 
 *Note: Preproceccing is will be performed **online**. The files just split the data and provides pairs for the siamiese approach.*
 
@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
 ### License
 
-Pretty much the [BSD-2 license](./LICENSE), just don't repackage it and call it your own please!<br>
+Pretty much the [BSD 3-Clause License](https://github.com/bohniti/jigsaw-puzzle-solver/blob/master/LICENSE), just don't repackage it and call it your own please!<br>
 Also if you do make some changes, feel free to make a pull request and help make things more awesome!
 
 ### Get in touch
