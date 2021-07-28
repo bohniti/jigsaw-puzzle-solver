@@ -47,12 +47,16 @@ def load_step(config, transform):
                                                  batch_size=config['batch_size'],
                                                  num_workers=config['num_workers'],
                                                  drop_last=True)
-    testt_dataloader = torch.utils.data.DataLoader(dataset3,
-                                                   batch_size=config['batch_size'],
-                                                   num_workers=config['num_workers'],
-                                                   drop_last=True)
 
-    return train_dataloader, val_dataloader, testt_dataloader
+    if config['stage'] == 'train':
+        return train_dataloader, val_dataloader
+    else:
+        testt_dataloader = torch.utils.data.DataLoader(dataset3,
+                                                       batch_size=config['batch_size'],
+                                                       num_workers=config['num_workers'],
+                                                       drop_last=True)
+
+        return train_dataloader, val_dataloader, testt_dataloader
 
 
 def log_step(config):
@@ -66,7 +70,7 @@ def log_step(config):
     return tb_logger
 
 
-def train_step(config, model, train_dataloader, val_dataloader, test_dataloader, tb_logger):
+def train_step(config, model, train_dataloader, val_dataloader, tb_logger, test_dataloader=None):
     if config['stage'] == 'train':
         trainer = pl.Trainer(min_epochs=config['min_epochs'],
                              max_epochs=config['max_epochs'],
