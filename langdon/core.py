@@ -35,10 +35,7 @@ def load_step(config, transform):
         csv_file=config['val_file'],
         raw_img_path=config['raw_img_path'],
         transform=transform)
-    dataset3 = SiameseDataset(
-        csv_file=config['test_file'],
-        raw_img_path=config['raw_img_path'],
-        transform=transform)
+
     train_dataloader = torch.utils.data.DataLoader(dataset1,
                                                    batch_size=config['batch_size'],
                                                    num_workers=config['num_workers'],
@@ -51,6 +48,10 @@ def load_step(config, transform):
     if config['stage'] == 'train':
         return train_dataloader, val_dataloader
     else:
+        dataset3 = SiameseDataset(
+            csv_file=config['test_file'],
+            raw_img_path=config['raw_img_path'],
+            transform=transform)
         testt_dataloader = torch.utils.data.DataLoader(dataset3,
                                                        batch_size=config['batch_size'],
                                                        num_workers=config['num_workers'],
