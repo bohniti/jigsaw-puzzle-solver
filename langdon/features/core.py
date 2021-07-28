@@ -5,7 +5,7 @@ from PIL import Image
 from torch.utils.data import Dataset
 
 
-class SiameseNetworkDataset(Dataset):
+class SiameseDataset(Dataset):
     """
     PyTorch Dataset Class which gets data from a csv file
     which was initialized within the processing step (./notebooks/DataPreparation_V2.ipynb)

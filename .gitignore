@@ -1,9 +1,10 @@
 /env/
 data
 data/KMNIST/
-src/__pycache__/*
-src/models/__pycache__/*
+langdon/__pycache__/*
+langdon/models/__pycache__/*
 *.pyc
 *.pyo
 /results/
 /.ipynb_checkpoints/
+/conda-env/
