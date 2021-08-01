@@ -41,7 +41,7 @@ class SiameseNetwork(pl.LightningModule):
             self.input_size = 8 * 1000
         else:
             self.cnn1 = pdresnet50(pretrained=False, linear_input=self.linear_input, center_crop=self.center_crop)
-            self.input_size = 256
+            self.input_size = self.batch_size
 
         self.fc1 = nn.Sequential(
             nn.Linear(self.input_size, 500),
