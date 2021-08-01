@@ -1,13 +1,13 @@
 center_crop = 190
 linear_input = 346112
 gpus = 1
-batch_size = 256 
+batch_size = 256
 num_workers = 6
 save_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/logs/'
 default_root_dir = 'home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/checkpoints/'
-train_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/train.csv'
-val_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/val.csv'
-test_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/test.csv'
+train_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_train.csv'
+val_file = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_val.csv'
+test_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_test.csv'
 raw_img_path = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver'
 min_epochs = 30
 max_epochs = 30
