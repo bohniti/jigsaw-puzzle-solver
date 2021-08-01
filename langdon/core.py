@@ -1,3 +1,4 @@
+import albumentations as A
 import pytorch_lightning as pl
 import torch.utils.data
 from pytorch_lightning import loggers as pl_loggers
@@ -13,8 +14,9 @@ def init_step():
     config = load_config(config_file_name, show=True, tune_config=False)
     transform = transforms.Compose([
         transforms.CenterCrop(config['center_crop']),
-        # transforms.Grayscale(num_output_channels=1),
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Normalize((5.3325e-05, 5.8596e-05, 6.1047e-05),(0.0061, 0.0066, 0.0069)),
+
     ])
     model = SiameseNetwork(batch_size=config['batch_size'],
                            learning_rate=config['learning_rate'],

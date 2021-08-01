@@ -36,3 +36,31 @@ def set_size(width, fraction=1, subplots=(1, 1)):
     fig_height_in = fig_width_in * golden_ratio * (subplots[0] / subplots[1])
 
     return (fig_width_in, fig_height_in)
+
+def get_info(data_path):
+    # load file names train dataset
+    file_names = [splitext(f)[0] for f in listdir(data_path) if isfile(join(data_path, f))]
+
+    # load file name test dataset
+    #file_names_test = [splitext(f)[0] for f in listdir(data_path_test) if isfile(join(data_path_test, f))]
+
+    # Split the image naming in wirter, page and fragment
+    # For training
+    #file_names_parts = [i.split("_") for i in file_names]
+    # For test
+    file_names_parts = [i.split("_") for i in file_names_test]
+
+    return pd.DataFrame.from_records(file_names_parts,columns=['writer_id', 'page_id','fragment_id'])
+
+def get_filenames(train_path, test_path):
+    # load file names train dataset
+    train = [path.splitext(f)[0] for f in listdir(train_path) if path.isfile(path.join(train_path, f))]
+
+    # load file name test dataset
+    test = [path.splitext(f)[0] for f in listdir(test_path) if path.isfile(path.join(test_path, f))]
+    return train, test
+
+def get_imgsize(train_filenames, test_filenames, train_path, test_path):
+    train = [Image.open(train_path + '/' +f+ '.jpg', 'r').size for f in train_filenames]
+    test = [Image.open(test_path + '/'+ f + '.jpg', 'r').size for f in test_filenames]
+    return train, testv

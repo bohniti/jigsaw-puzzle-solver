@@ -1,3 +1,6 @@
+notebooks/exploratory/figures/readme-writer-sample.svg
+notebooks/exploratory/figures/readme-writers-samples.svg
+notebooks/exploratory/figures/readme-data.svg
 /env/
 data
 data/KMNIST/
@@ -8,3 +11,4 @@ langdon/models/__pycache__/*
 /results/
 /.ipynb_checkpoints/
 /conda-env/
+/.virtual_documents/
