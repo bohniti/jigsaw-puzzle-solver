@@ -41,7 +41,7 @@ class SiameseNetwork(pl.LightningModule):
             self.input_size = 8 * 1000
         else:
             self.cnn1 = pdresnet50(pretrained=False, linear_input=self.linear_input, center_crop=self.center_crop)
-            self.input_size = 8
+            self.input_size = 256
 
         self.fc1 = nn.Sequential(
             nn.Linear(self.input_size, 500),
@@ -49,7 +49,7 @@ class SiameseNetwork(pl.LightningModule):
 
             nn.Linear(500, 500),
             nn.ReLU(inplace=True),
-            nn.Linear(500, 8)
+            nn.Linear(500, self.batch_size)
         )
 
     def binary_acc(self, y_pred, y_test):
@@ -178,7 +178,7 @@ class SiameseNetwork(pl.LightningModule):
         self.logger.experiment.add_scalar("Accuracy/Train", avg_acc, self.current_epoch)
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.learning_rate)
         return optimizer
 
 
