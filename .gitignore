@@ -7,3 +7,4 @@ langdon/models/__pycache__/*
 /results/
 /.ipynb_checkpoints/
 /conda-env/
+/.virtual_documents/

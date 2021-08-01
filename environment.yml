@@ -12,4 +12,5 @@ dependencies:
     - toml
     - pandas
     - matplotlib
+    - seaborn
 
