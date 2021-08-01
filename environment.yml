@@ -3,6 +3,8 @@ channels:
     - conda-forge
 dependencies:
     - python
+    - matplotlib
+    - seaborn
     - pytorch-lightning
     - torchvision
     - opencv
@@ -11,6 +13,5 @@ dependencies:
     - optuna
     - toml
     - pandas
-    - matplotlib
-    - seaborn
-
+    - scikit-learn
+    - albumentations

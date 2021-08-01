@@ -1,7 +1,7 @@
-center_crop = 512
-linear_input = 1384448
+center_crop = 200
+linear_input = 346112
 gpus = 1
-batch_size = 8
+batch_size = 512
 num_workers = 6
 save_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/logs/'
 default_root_dir = 'home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/checkpoints/'
