@@ -45,10 +45,10 @@ class SiameseNetwork(pl.LightningModule):
 
         self.fc1 = nn.Sequential(
             nn.Linear(self.input_size, 500),
-            nn.ReLU(inplace=True),
+            nn.SELU(inplace=True),
 
             nn.Linear(500, 500),
-            nn.ReLU(inplace=True),
+            nn.SELU(inplace=True),
             nn.Linear(500, self.batch_size)
         )
 
