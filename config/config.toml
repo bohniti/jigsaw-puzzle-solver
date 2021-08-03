@@ -1,7 +1,7 @@
 center_crop = 190
 linear_input = 294912
 gpus = 1
-batch_size = 32
+batch_size = 48
 num_workers = 6
 save_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/logs/'
 default_root_dir = 'home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/checkpoints/'
@@ -13,7 +13,7 @@ min_epochs = 30
 max_epochs = 30
 progress_bar_refresh_rate=0
 learning_rate = 0.001
-margin = 0.9
+margin = 0.2
 partial_conf=1
 stage='train'
 checkpoint_path='/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/results/logs/default/version_63/checkpoints/epoch=1-step=3.ckpt'
