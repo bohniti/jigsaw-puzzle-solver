@@ -19,9 +19,17 @@ class SiameseDataset(Dataset):
     def __getitem__(self, index):
         sample = self.df.loc[index]
 
-        img_0 = Image.open(self.raw_img_path + sample['0'] + '.jpg')
-        img_1 = Image.open(self.raw_img_path + sample['1'] + '.jpg')
+        img_0 = np.array(Image.open(self.raw_img_path + sample['0'] + '.jpg'))
+        img_1 = np.array(Image.open(self.raw_img_path + sample['1'] + '.jpg'))
 
+        img_norm_0 = ((img_0 - [177.94358135, 172.76080215, 156.96380767]) / ([68.5756737, 65.07215749, 60.08241233]))
+        img_norm_1 = ((img_1 - [177.94358135, 172.76080215, 156.96380767]) / ([68.5756737, 65.07215749, 60.08241233]))
+
+        img_0 = np.nan_to_num(img_norm_0, copy=True)
+        img_1 = np.nan_to_num(img_norm_1, copy=True)
+
+        img_0 = Image.fromarray((img_0 * 255).astype(np.uint8))
+        img_1 = Image.fromarray((img_1 * 255).astype(np.uint8))
 
         y = torch.from_numpy(np.array(sample.y, dtype=np.float32))
 
