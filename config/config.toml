@@ -1,5 +1,5 @@
 center_crop = 200
-linear_input = 294912
+linear_input = 346112
 gpus = 1
 batch_size = 48
 num_workers = 6

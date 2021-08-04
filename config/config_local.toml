@@ -1,4 +1,4 @@
-center_crop = 32
+center_crop = 200
 linear_input = 8192
 gpus = 0
 batch_size = 16
