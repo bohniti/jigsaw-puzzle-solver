@@ -1,7 +1,7 @@
 center_crop = 200
 linear_input = 346112
 gpus = 1
-batch_size = 48
+batch_size = 52
 num_workers = 6
 save_dir = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/logs/'
 default_root_dir = 'home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver/results/checkpoints/'
@@ -12,7 +12,7 @@ raw_img_path = '/home/hpc/iwi5/iwi5012h/dev/jigsaw-puzzle-solver'
 min_epochs = 30
 max_epochs = 30
 progress_bar_refresh_rate=0
-learning_rate = 0.001
+learning_rate = 0.01
 margin = 0.2
 partial_conf=1
 stage='train'
