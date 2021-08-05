@@ -73,7 +73,11 @@ class SiameseNetwork(pl.LightningModule):
         output = self(x0, x1)
         loss = self.criterion(output, y)
         acc = self.binary_acc(output, y)
-
+        opt = self.optimizers()
+        opt.zero_grad()
+        loss = self.compute_loss(batch)
+        self.manual_backward(loss)
+        opt.step()
         # self.log('train_loss', loss, prog_bar=False, logger=True, on_step=False, on_epoch=True)
         # self.log('train_acc', acc, prog_bar=False, logger=True, on_step=False, on_epoch=True)
 
@@ -178,8 +182,13 @@ class SiameseNetwork(pl.LightningModule):
         self.logger.experiment.add_scalar("Accuracy/Train", avg_acc, self.current_epoch)
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=self.learning_rate)
-        return optimizer
+        #optimizer = torch.optim.AdamW(self.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.SGD(self.parameters(), lr=0.1, momentum=0.9)
+        scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=0.01, max_lr=0.1)
+        return {
+            "optimizer": optimizer,
+            "lr_scheduler": scheduler
+        }
 
 
 def conv3x3(in_planes, out_planes, stride=1):
