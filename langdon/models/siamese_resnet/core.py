@@ -183,7 +183,7 @@ class SiameseNetwork(pl.LightningModule):
 
     def configure_optimizers(self):
         #optimizer = torch.optim.AdamW(self.parameters(), lr=self.learning_rate)
-        optimizer = torch.optim.SGD(self.parameters(), lr=0.1, momentum=0.9)
+        optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate, momentum=0.9)
         scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=0.01, max_lr=0.1)
         return {
             "optimizer": optimizer,

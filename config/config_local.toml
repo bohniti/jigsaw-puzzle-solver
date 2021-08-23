@@ -1,4 +1,4 @@
-center_crop = 200
+center_crop = 512
 linear_input = 8192
 gpus = 0
 batch_size = 16
@@ -10,7 +10,7 @@ val_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/
 test_file = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver/data/hisfrag20/prepared/paris_as_csv/dev_test.csv'
 raw_img_path = '/Users/beantown/PycharmProjects/jigsaw-puzzle-solver'
 min_epochs = 1
-max_epochs = 2
+max_epochs = 20
 progress_bar_refresh_rate=0.5
 learning_rate = 0.001
 margin = 0.9
